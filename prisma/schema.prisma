@@ -1,0 +1,244 @@
+// SARFI data model.
+// Money strategy: all monetary amounts are stored as Decimal(12, 2).
+// Never floats. Application code converts to/from string at the boundary
+// (see src/lib/money.ts) and formats per-currency.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Language {
+  AR
+  FR
+  EN
+}
+
+enum Theme {
+  SYSTEM
+  LIGHT
+  DARK
+}
+
+enum WalletType {
+  CASH
+  CARD
+  BANK
+  OTHER
+}
+
+enum PeriodType {
+  MONTHLY
+  WEEKLY
+  YEARLY
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+model User {
+  id                String   @id @default(cuid())
+  name              String
+  email             String   @unique
+  passwordHash      String
+  preferredLanguage Language @default(EN)
+  preferredCurrency String   @default("DZD")
+  timezone          String   @default("Africa/Algiers")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  preferences       UserPreferences?
+  sessions          Session[]
+  wallets           Wallet[]
+  categories        Category[]
+  expenses          Expense[]
+  budgets           Budget[]
+  savingsGoals      SavingsGoal[]
+  recurringExpenses RecurringExpense[]
+  achievements      UserAchievement[]
+  dailyTracking     DailyTracking[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  // sha256 hex of the raw session token — the raw token only lives in the cookie
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model UserPreferences {
+  id                       String  @id @default(cuid())
+  userId                   String  @unique
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  onboardingCompleted      Boolean @default(false)
+  setupCompleted           Boolean @default(false)
+  financialMonthStartDay   Int     @default(1)
+  reducedMotion            Boolean @default(false)
+  theme                    Theme   @default(SYSTEM)
+  notifyDailyReminder      Boolean @default(true)
+  notifyBudgetAlerts       Boolean @default(true)
+  notifyWeeklySummary      Boolean @default(false)
+}
+
+model Wallet {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  type       WalletType @default(CASH)
+  balance    Decimal    @default(0) @db.Decimal(12, 2)
+  currency   String     @default("DZD")
+  icon       String     @default("wallet")
+  color      String     @default("primary")
+  isArchived Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+
+  expenses  Expense[]
+  recurring RecurringExpense[]
+
+  @@index([userId])
+}
+
+model Category {
+  id         String   @id @default(cuid())
+  // null userId = system category available to everyone
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  slug       String
+  icon       String
+  color      String
+  parentId   String?
+  parent     Category?  @relation("Subcategories", fields: [parentId], references: [id], onDelete: SetNull)
+  children   Category[] @relation("Subcategories")
+  isSystem   Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  sortOrder  Int      @default(0)
+
+  expenses  Expense[]
+  budgets   Budget[]
+  recurring RecurringExpense[]
+
+  @@unique([userId, slug])
+  @@index([parentId])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  walletId    String?
+  wallet      Wallet?  @relation(fields: [walletId], references: [id], onDelete: SetNull)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  amount      Decimal  @db.Decimal(12, 2)
+  currency    String   @default("DZD")
+  description String
+  merchant    String?
+  note        String?
+  expenseDate DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, expenseDate])
+  @@index([categoryId])
+}
+
+model Budget {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // null categoryId = overall budget
+  categoryId String?
+  category   Category?  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  amount     Decimal    @db.Decimal(12, 2)
+  currency   String     @default("DZD")
+  periodType PeriodType @default(MONTHLY)
+  startDate  DateTime
+  endDate    DateTime?
+
+  @@index([userId])
+}
+
+model SavingsGoal {
+  id            String     @id @default(cuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  targetAmount  Decimal    @db.Decimal(12, 2)
+  currentAmount Decimal    @default(0) @db.Decimal(12, 2)
+  currency      String     @default("DZD")
+  targetDate    DateTime?
+  icon          String     @default("target")
+  status        GoalStatus @default(ACTIVE)
+
+  @@index([userId])
+}
+
+model RecurringExpense {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  walletId    String?
+  wallet      Wallet?   @relation(fields: [walletId], references: [id], onDelete: SetNull)
+  amount      Decimal   @db.Decimal(12, 2)
+  currency    String    @default("DZD")
+  description String
+  frequency   Frequency @default(MONTHLY)
+  nextDueDate DateTime
+  isActive    Boolean   @default(true)
+
+  @@index([userId, nextDueDate])
+}
+
+model Achievement {
+  id          String @id @default(cuid())
+  key         String @unique
+  title       String
+  description String
+  icon        String
+
+  users UserAchievement[]
+}
+
+model UserAchievement {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  unlockedAt    DateTime    @default(now())
+
+  @@unique([userId, achievementId])
+}
+
+model DailyTracking {
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date              DateTime @db.Date
+  trackingCompleted Boolean  @default(false)
+  expenseCount      Int      @default(0)
+
+  @@id([userId, date])
+}
