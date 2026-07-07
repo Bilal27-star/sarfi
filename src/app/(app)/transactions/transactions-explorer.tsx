@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { Search, SlidersHorizontal, SearchX, X } from 'lucide-react'
 import { Sheet } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
@@ -30,12 +30,52 @@ export function TransactionsExplorer({ expenses, categories, wallets }: Props) {
   const searchParams = useSearchParams()
   const locale = useLocale()
   const t = useT()
+  const reducedMotion = useReducedMotion()
 
   const [searchOpen, setSearchOpen] = useState(false)
   const [filterOpen, setFilterOpen] = useState(false)
   const [query, setQuery] = useState(searchParams.get('q') ?? '')
   const searchInputRef = useRef<HTMLInputElement>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Expanded title/total block fades and drifts up as it scrolls under the
+  // sticky controls row — a native-feeling collapse rather than a hard cut.
+  const headerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: headerProgress } = useScroll({ target: headerRef, offset: ['start start', 'end start'] })
+  const headerOpacity = useTransform(headerProgress, [0, 1], [1, 0])
+  const headerY = useTransform(headerProgress, [0, 1], [0, -8])
+
+  // A zero-height sentinel just above the sticky row: once it scrolls past
+  // the viewport top, the row is genuinely "stuck", so we can fade in its
+  // compact background/border treatment instead of showing it permanently.
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const [isStuck, setIsStuck] = useState(false)
+
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => setIsStuck(!entry.isIntersecting), { threshold: 0 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // Measure the sticky row's real height (it varies slightly by locale —
+  // longer French/Arabic labels, different font metrics) so the per-day
+  // group headers below can stick flush beneath it instead of guessing a
+  // fixed pixel value. The variable is set on the shared root ancestor —
+  // custom properties don't cascade to siblings, only descendants.
+  const rootRef = useRef<HTMLDivElement>(null)
+  const controlsRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const controls = controlsRef.current
+    const root = rootRef.current
+    if (!controls || !root) return
+    const setHeight = () => root.style.setProperty('--transactions-sticky-h', `${controls.offsetHeight}px`)
+    setHeight()
+    const observer = new ResizeObserver(setHeight)
+    observer.observe(controls)
+    return () => observer.disconnect()
+  }, [])
 
   function setParam(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString())
@@ -79,118 +119,139 @@ export function TransactionsExplorer({ expenses, categories, wallets }: Props) {
   }, [expenses, locale, t])
 
   return (
-    <div className="py-5">
-      {/* Title / period summary / search & filter entry points */}
-      <div className="flex min-h-9 items-center justify-between gap-3">
-        <AnimatePresence mode="wait" initial={false}>
-          {searchOpen ? (
-            <motion.div
-              key="search"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.16 }}
-              className="relative flex-1"
-            >
-              <Search className="pointer-events-none absolute inset-y-0 start-3 my-auto size-4.5 text-text-muted" aria-hidden />
-              <input
-                ref={searchInputRef}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                type="search"
-                placeholder={t('transactions.searchPlaceholder')}
-                aria-label={t('transactions.searchAria')}
-                className="h-10 w-full rounded-full border border-border-strong bg-surface ps-9 pe-9 text-sm font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  setQuery('')
-                  setParam('q', '')
-                  setSearchOpen(false)
-                }}
-                aria-label={t('common.cancel')}
-                className="absolute inset-y-0 end-1.5 my-auto flex size-7 items-center justify-center rounded-full text-text-muted"
-              >
-                <X className="size-4" aria-hidden />
-              </button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="title"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 4 }}
-              transition={{ duration: 0.16 }}
-              className="min-w-0"
-            >
-              <h1 className="text-title-screen truncate">{t('transactions.title')}</h1>
-              <p className="tnum text-meta">{t('transactions.spentPeriod', { amount: formatMoney(total, { locale }) })}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+    <div ref={rootRef} className="py-5">
+      {/* Expanded header — title + period summary. Scrolls away naturally;
+          a subtle scroll-linked fade makes the collapse feel intentional. */}
+      <motion.div
+        ref={headerRef}
+        style={reducedMotion ? undefined : { opacity: headerOpacity, y: headerY }}
+        className="min-w-0"
+      >
+        <h1 className="text-title-screen truncate">{t('transactions.title')}</h1>
+        <p className="tnum text-meta">{t('transactions.spentPeriod', { amount: formatMoney(total, { locale }) })}</p>
+      </motion.div>
 
-        {!searchOpen && (
-          <div className="flex shrink-0 items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => {
-                setSearchOpen(true)
-                setTimeout(() => searchInputRef.current?.focus(), 180)
-              }}
-              aria-label={t('transactions.searchAria')}
-              className="flex size-10 items-center justify-center rounded-full text-text-secondary hover:bg-surface-sunken"
-            >
-              <Search className="size-5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              onClick={() => setFilterOpen(true)}
-              aria-label={t('transactions.filtersAria')}
-              className={cn(
-                'relative flex size-10 items-center justify-center rounded-full',
-                advancedFilters.length > 0 ? 'bg-primary-soft text-success' : 'text-text-secondary hover:bg-surface-sunken',
-              )}
-            >
-              <SlidersHorizontal className="size-5" aria-hidden />
-              {advancedFilters.length > 0 && (
-                <span className="absolute -end-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[9px] font-extrabold text-text-on-primary">
-                  {advancedFilters.length}
-                </span>
-              )}
-            </button>
-          </div>
+      <div ref={sentinelRef} aria-hidden className="h-0" />
+
+      {/* Sticky controls — search, filter, category chips. Always present in
+          flow; gains a translucent/blur/border treatment only once actually
+          stuck to the viewport top, so it doesn't look like a floating card
+          while still part of the expanded layout. */}
+      <div
+        ref={controlsRef}
+        className={cn(
+          'sticky top-safe z-20 -mx-4 border-b px-4 py-2.5 transition-colors duration-200 sm:-mx-6 sm:px-6',
+          isStuck ? 'border-border-subtle bg-background/90 shadow-[0_1px_0_0_rgba(24,34,27,0.04)] backdrop-blur-md' : 'border-transparent bg-background',
         )}
-      </div>
+      >
+        <div className="flex min-h-10 items-center gap-2">
+          <AnimatePresence mode="wait" initial={false}>
+            {searchOpen ? (
+              <motion.div
+                key="search"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.16 }}
+                className="relative flex-1"
+              >
+                <Search className="pointer-events-none absolute inset-y-0 start-3 my-auto size-4.5 text-text-muted" aria-hidden />
+                <input
+                  ref={searchInputRef}
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  type="search"
+                  placeholder={t('transactions.searchPlaceholder')}
+                  aria-label={t('transactions.searchAria')}
+                  className="h-10 w-full rounded-full border border-border-strong bg-surface ps-9 pe-9 text-sm font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuery('')
+                    setParam('q', '')
+                    setSearchOpen(false)
+                  }}
+                  aria-label={t('common.cancel')}
+                  className="absolute inset-y-0 end-1.5 my-auto flex size-7 items-center justify-center rounded-full text-text-muted"
+                >
+                  <X className="size-4" aria-hidden />
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="controls"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.16 }}
+                className="flex min-w-0 flex-1 items-center gap-2"
+              >
+                <div className="flex shrink-0 items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchOpen(true)
+                      // preventScroll: the input is already visible (sticky at top) at any
+                      // scroll depth — without this, focusing it can yank the page back to top.
+                      setTimeout(() => searchInputRef.current?.focus({ preventScroll: true }), 180)
+                    }}
+                    aria-label={t('transactions.searchAria')}
+                    className="flex size-10 items-center justify-center rounded-full text-text-secondary hover:bg-surface-sunken"
+                  >
+                    <Search className="size-5" aria-hidden />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFilterOpen(true)}
+                    aria-label={t('transactions.filtersAria')}
+                    className={cn(
+                      'relative flex size-10 items-center justify-center rounded-full',
+                      advancedFilters.length > 0 ? 'bg-primary-soft text-success' : 'text-text-secondary hover:bg-surface-sunken',
+                    )}
+                  >
+                    <SlidersHorizontal className="size-5" aria-hidden />
+                    {advancedFilters.length > 0 && (
+                      <span className="absolute -end-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[9px] font-extrabold text-text-on-primary">
+                        {advancedFilters.length}
+                      </span>
+                    )}
+                  </button>
+                </div>
 
-      {/* Quick category chips */}
-      <div className="mt-4 -mx-4 flex gap-2 overflow-x-auto scrollbar-none px-4 sm:-mx-6 sm:px-6">
-        <button
-          type="button"
-          onClick={() => setParam('category', '')}
-          className={cn(
-            'shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-bold transition',
-            !activeCategory ? 'border-primary bg-primary-soft text-success' : 'border-border-subtle text-text-secondary',
-          )}
-        >
-          {t('transactions.all')}
-        </button>
-        {categories.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => setParam('category', activeCategory === c.id ? '' : c.id)}
-            className={cn(
-              'shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-bold transition',
-              activeCategory === c.id ? 'border-primary bg-primary-soft text-success' : 'border-border-subtle text-text-secondary',
+                {/* Category chips */}
+                <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto scrollbar-none">
+                  <button
+                    type="button"
+                    onClick={() => setParam('category', '')}
+                    className={cn(
+                      'shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-bold transition',
+                      !activeCategory ? 'border-primary bg-primary-soft text-success' : 'border-border-subtle text-text-secondary',
+                    )}
+                  >
+                    {t('transactions.all')}
+                  </button>
+                  {categories.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => setParam('category', activeCategory === c.id ? '' : c.id)}
+                      className={cn(
+                        'shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-bold transition',
+                        activeCategory === c.id ? 'border-primary bg-primary-soft text-success' : 'border-border-subtle text-text-secondary',
+                      )}
+                    >
+                      {categoryLabel(t, c)}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
             )}
-          >
-            {categoryLabel(t, c)}
-          </button>
-        ))}
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Active advanced filters */}
+      {/* Active advanced filters — supplementary, scrolls away with content */}
       {advancedFilters.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {searchParams.get('wallet') && (
@@ -231,7 +292,7 @@ export function TransactionsExplorer({ expenses, categories, wallets }: Props) {
         <div className="mt-3">
           {groups.map((group) => (
             <section key={group.key} aria-label={group.label}>
-              <div className="sticky top-0 z-10 -mx-4 flex items-baseline justify-between bg-background/95 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6">
+              <div className="top-safe-controls sticky z-10 -mx-4 flex items-baseline justify-between bg-background/95 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6">
                 <h2 className="text-caption text-text-secondary">{group.label}</h2>
                 <span className="tnum text-caption text-text-muted">
                   {group.items.length} · {formatMoney(group.total, { locale, withSuffix: false })}

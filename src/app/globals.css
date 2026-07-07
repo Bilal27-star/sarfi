@@ -84,6 +84,9 @@
 
 :root {
   color-scheme: light;
+  /* Height of the Transactions sticky controls row (search/filter/chips) —
+     shared so per-day group headers can stick just below it, not under it. */
+  --transactions-sticky-h: 3.5rem;
 }
 
 html {
@@ -181,6 +184,14 @@ body {
 .px-safe {
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+/* Sticky-offset variants — for position:sticky elements, which measure
+   `top` from the viewport, not from a padded ancestor. */
+.top-safe {
+  top: env(safe-area-inset-top);
+}
+.top-safe-controls {
+  top: calc(env(safe-area-inset-top) + var(--transactions-sticky-h));
 }
 
 /* Tactile press-down button (used by <Button>) */
