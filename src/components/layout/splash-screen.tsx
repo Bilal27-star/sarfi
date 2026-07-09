@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { MARK_VIEWBOX, MARK_S_PATH, MARK_STROKE_WIDTH, MARK_DOT } from '@/components/layout/logo'
+import { playSonicLogo } from '@/components/layout/sonic-logo'
 
 /**
  * One-time brand reveal on real app launch (cold load / hard refresh), never
@@ -18,6 +19,10 @@ import { MARK_VIEWBOX, MARK_S_PATH, MARK_STROKE_WIDTH, MARK_DOT } from '@/compon
 
 const EXIT_AT_MS = 2000
 const EXIT_MS = 420
+// Fires as the settle lands (settle: 1.3s + 0.4s); the cue's ~550ms tail
+// resolves right at EXIT_AT_MS, so sound completion and the transition into
+// the app read as one moment.
+const SOUND_AT_MS = 1450
 
 const drawEase = [0.65, 0, 0.35, 1] as const
 const exitEase = [0.22, 1, 0.36, 1] as const
@@ -31,9 +36,13 @@ export function SplashScreen({ label }: { label: string }) {
     const exitFor = reducedMotion ? 220 : EXIT_MS
     const exitTimer = setTimeout(() => setPhase('exiting'), exitAt)
     const doneTimer = setTimeout(() => setPhase('done'), exitAt + exitFor)
+    // Sonic cue at the settle moment; skipped under reduced motion, and a
+    // no-op when the browser blocks audio before first interaction.
+    const soundTimer = reducedMotion ? undefined : setTimeout(playSonicLogo, SOUND_AT_MS)
     return () => {
       clearTimeout(exitTimer)
       clearTimeout(doneTimer)
+      if (soundTimer) clearTimeout(soundTimer)
     }
   }, [reducedMotion])
 
