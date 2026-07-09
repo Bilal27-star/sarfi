@@ -8,7 +8,8 @@
  *   silently. Offline expense drafts + a sync queue are the documented next
  *   step (see README) and will build on this worker.
  */
-const VERSION = 'sarfi-v1'
+// v2: new brand mark — bumping evicts the old logo cached under /icons/
+const VERSION = 'sarfi-v2'
 const STATIC_CACHE = `${VERSION}-static`
 const OFFLINE_URL = '/offline'
 

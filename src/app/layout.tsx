@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Space_Grotesk, Almarai } from 'next/font/google'
 import { RegisterServiceWorker } from '@/components/pwa/register-sw'
-import { getServerLocale } from '@/i18n/locale-server'
+import { SplashScreen } from '@/components/layout/splash-screen'
+import { getServerLocale, getServerTranslator } from '@/i18n/locale-server'
 import { dir } from '@/i18n/config'
 import { I18nProvider } from '@/i18n/provider'
 import './globals.css'
@@ -41,6 +42,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getServerLocale()
+  const { t } = await getServerTranslator()
 
   return (
     <html
@@ -51,6 +53,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     >
       <body>
         <I18nProvider locale={locale}>{children}</I18nProvider>
+        <SplashScreen label={t('common.loading')} />
         <RegisterServiceWorker />
       </body>
     </html>

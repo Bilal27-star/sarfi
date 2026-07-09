@@ -1,27 +1,35 @@
 import { cn } from '@/lib/utils'
 
 /**
- * SARFI brand mark — "the loop": a 270° open ring with a companion dot
- * approaching its mouth, reading as a single dinar flowing in and being
- * absorbed into a continuous, controlled loop of tracked spending. Chosen
- * over two other explored directions — an ascending sparkline-through-bars
- * (too close to a generic analytics-app icon) and a bisected coin/valve
- * (read too easily as a piggy bank or a bitten coin) — for being the most
- * original, legible at 24px, and true to "track every dinar, see the loop."
+ * SARFI brand mark — "the sarf path": an S monogram built from two opposing
+ * 270° loops that meet at a single central point, with one dot above the
+ * entry terminal. The top loop turns counterclockwise (money in), the bottom
+ * turns clockwise (money out) — income and expense resolved into one
+ * continuous, controlled path through a balance point. The dot is the dinar
+ * entering the flow, and a bilingual nod: صرفي is written with ف, whose
+ * single diacritic dot sits above the letter body exactly as here.
+ *
+ * Geometry is exported so the splash animation can construct the mark from
+ * its real path rather than animating a flattened copy.
  */
+export const MARK_VIEWBOX = '0 0 48 48'
+export const MARK_S_PATH = 'M31.5 16.5A7.5 7.5 0 1 0 24 24A7.5 7.5 0 1 1 16.5 31.5'
+export const MARK_STROKE_WIDTH = 6.5
+export const MARK_DOT = { cx: 34, cy: 6.5, r: 2.5 }
+
 export function LogoMark({ className, monochrome = false }: { className?: string; monochrome?: boolean }) {
-  const ringColor = monochrome ? 'currentColor' : 'var(--color-primary)'
+  const inkColor = monochrome ? 'currentColor' : 'var(--color-primary)'
   return (
-    <svg viewBox="0 0 48 48" className={cn('size-9', className)} aria-hidden>
+    <svg viewBox={MARK_VIEWBOX} className={cn('size-9', className)} aria-hidden>
       {!monochrome && <rect x="1" y="1" width="46" height="46" rx="14" fill="var(--color-ink-900)" />}
       <path
-        d="M38.09 29.13A15 15 0 1 1 29.13 9.91"
+        d={MARK_S_PATH}
         fill="none"
-        stroke={ringColor}
-        strokeWidth="6.5"
+        stroke={inkColor}
+        strokeWidth={MARK_STROKE_WIDTH}
         strokeLinecap="round"
       />
-      <circle cx="37.6" cy="17.66" r="4.2" fill={ringColor} />
+      <circle cx={MARK_DOT.cx} cy={MARK_DOT.cy} r={MARK_DOT.r} fill={inkColor} />
     </svg>
   )
 }
