@@ -20,6 +20,11 @@
 # production
 /build
 
+# local-dev-only avatar storage fallback (see src/server/services/avatar-storage.ts) —
+# production always uses Vercel Blob; this directory only exists when
+# BLOB_READ_WRITE_TOKEN is unset on a machine that isn't Vercel itself
+/public/uploads
+
 # misc
 .DS_Store
 *.pem

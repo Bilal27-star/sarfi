@@ -29,6 +29,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   email: string | null
   passwordHash: string | null
+  avatarUrl: string | null
   preferredLanguage: $Enums.Language | null
   preferredCurrency: string | null
   timezone: string | null
@@ -41,6 +42,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   email: string | null
   passwordHash: string | null
+  avatarUrl: string | null
   preferredLanguage: $Enums.Language | null
   preferredCurrency: string | null
   timezone: string | null
@@ -53,6 +55,7 @@ export type UserCountAggregateOutputType = {
   name: number
   email: number
   passwordHash: number
+  avatarUrl: number
   preferredLanguage: number
   preferredCurrency: number
   timezone: number
@@ -67,6 +70,7 @@ export type UserMinAggregateInputType = {
   name?: true
   email?: true
   passwordHash?: true
+  avatarUrl?: true
   preferredLanguage?: true
   preferredCurrency?: true
   timezone?: true
@@ -79,6 +83,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   email?: true
   passwordHash?: true
+  avatarUrl?: true
   preferredLanguage?: true
   preferredCurrency?: true
   timezone?: true
@@ -91,6 +96,7 @@ export type UserCountAggregateInputType = {
   name?: true
   email?: true
   passwordHash?: true
+  avatarUrl?: true
   preferredLanguage?: true
   preferredCurrency?: true
   timezone?: true
@@ -176,6 +182,7 @@ export type UserGroupByOutputType = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl: string | null
   preferredLanguage: $Enums.Language
   preferredCurrency: string
   timezone: string
@@ -209,6 +216,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
+  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   preferredLanguage?: Prisma.EnumLanguageFilter<"User"> | $Enums.Language
   preferredCurrency?: Prisma.StringFilter<"User"> | string
   timezone?: Prisma.StringFilter<"User"> | string
@@ -231,6 +239,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   preferredCurrency?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
@@ -256,6 +265,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
+  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   preferredLanguage?: Prisma.EnumLanguageFilter<"User"> | $Enums.Language
   preferredCurrency?: Prisma.StringFilter<"User"> | string
   timezone?: Prisma.StringFilter<"User"> | string
@@ -278,6 +288,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   preferredCurrency?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
@@ -296,6 +307,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   preferredLanguage?: Prisma.EnumLanguageWithAggregatesFilter<"User"> | $Enums.Language
   preferredCurrency?: Prisma.StringWithAggregatesFilter<"User"> | string
   timezone?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -308,6 +320,7 @@ export type UserCreateInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -330,6 +343,7 @@ export type UserUncheckedCreateInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -352,6 +366,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,6 +389,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -396,6 +412,7 @@ export type UserCreateManyInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -408,6 +425,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,6 +438,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -432,6 +451,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   preferredCurrency?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
@@ -444,6 +464,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   preferredCurrency?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
@@ -456,6 +477,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   preferredCurrency?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
@@ -475,6 +497,10 @@ export type UserNullableScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type EnumLanguageFieldUpdateOperationsInput = {
@@ -632,6 +658,7 @@ export type UserCreateWithoutSessionsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -653,6 +680,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -690,6 +718,7 @@ export type UserUpdateWithoutSessionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -711,6 +740,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -732,6 +762,7 @@ export type UserCreateWithoutPreferencesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -753,6 +784,7 @@ export type UserUncheckedCreateWithoutPreferencesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -790,6 +822,7 @@ export type UserUpdateWithoutPreferencesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -811,6 +844,7 @@ export type UserUncheckedUpdateWithoutPreferencesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -832,6 +866,7 @@ export type UserCreateWithoutWalletsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -853,6 +888,7 @@ export type UserUncheckedCreateWithoutWalletsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -890,6 +926,7 @@ export type UserUpdateWithoutWalletsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -911,6 +948,7 @@ export type UserUncheckedUpdateWithoutWalletsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -932,6 +970,7 @@ export type UserCreateWithoutCategoriesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -953,6 +992,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -990,6 +1030,7 @@ export type UserUpdateWithoutCategoriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1011,6 +1052,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1032,6 +1074,7 @@ export type UserCreateWithoutExpensesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1053,6 +1096,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1090,6 +1134,7 @@ export type UserUpdateWithoutExpensesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1111,6 +1156,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1132,6 +1178,7 @@ export type UserCreateWithoutBudgetsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1153,6 +1200,7 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1190,6 +1238,7 @@ export type UserUpdateWithoutBudgetsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1211,6 +1260,7 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1232,6 +1282,7 @@ export type UserCreateWithoutSavingsGoalsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1253,6 +1304,7 @@ export type UserUncheckedCreateWithoutSavingsGoalsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1290,6 +1342,7 @@ export type UserUpdateWithoutSavingsGoalsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1311,6 +1364,7 @@ export type UserUncheckedUpdateWithoutSavingsGoalsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1332,6 +1386,7 @@ export type UserCreateWithoutRecurringExpensesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1353,6 +1408,7 @@ export type UserUncheckedCreateWithoutRecurringExpensesInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1390,6 +1446,7 @@ export type UserUpdateWithoutRecurringExpensesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1411,6 +1468,7 @@ export type UserUncheckedUpdateWithoutRecurringExpensesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1432,6 +1490,7 @@ export type UserCreateWithoutAchievementsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1453,6 +1512,7 @@ export type UserUncheckedCreateWithoutAchievementsInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1490,6 +1550,7 @@ export type UserUpdateWithoutAchievementsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1511,6 +1572,7 @@ export type UserUncheckedUpdateWithoutAchievementsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1532,6 +1594,7 @@ export type UserCreateWithoutDailyTrackingInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1553,6 +1616,7 @@ export type UserUncheckedCreateWithoutDailyTrackingInput = {
   name: string
   email: string
   passwordHash: string
+  avatarUrl?: string | null
   preferredLanguage?: $Enums.Language
   preferredCurrency?: string
   timezone?: string
@@ -1590,6 +1654,7 @@ export type UserUpdateWithoutDailyTrackingInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1611,6 +1676,7 @@ export type UserUncheckedUpdateWithoutDailyTrackingInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   preferredCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1735,6 +1801,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   email?: boolean
   passwordHash?: boolean
+  avatarUrl?: boolean
   preferredLanguage?: boolean
   preferredCurrency?: boolean
   timezone?: boolean
@@ -1758,6 +1825,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   passwordHash?: boolean
+  avatarUrl?: boolean
   preferredLanguage?: boolean
   preferredCurrency?: boolean
   timezone?: boolean
@@ -1770,6 +1838,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   passwordHash?: boolean
+  avatarUrl?: boolean
   preferredLanguage?: boolean
   preferredCurrency?: boolean
   timezone?: boolean
@@ -1782,6 +1851,7 @@ export type UserSelectScalar = {
   name?: boolean
   email?: boolean
   passwordHash?: boolean
+  avatarUrl?: boolean
   preferredLanguage?: boolean
   preferredCurrency?: boolean
   timezone?: boolean
@@ -1789,7 +1859,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "preferredLanguage" | "preferredCurrency" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "avatarUrl" | "preferredLanguage" | "preferredCurrency" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preferences?: boolean | Prisma.User$preferencesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1825,6 +1895,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     email: string
     passwordHash: string
+    avatarUrl: string | null
     preferredLanguage: $Enums.Language
     preferredCurrency: string
     timezone: string
@@ -2267,6 +2338,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly preferredLanguage: Prisma.FieldRef<"User", 'Language'>
   readonly preferredCurrency: Prisma.FieldRef<"User", 'String'>
   readonly timezone: Prisma.FieldRef<"User", 'String'>

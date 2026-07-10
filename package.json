@@ -20,6 +20,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@vercel/blob": "^2.6.1",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
@@ -29,6 +30,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.81.0",
+    "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
   },

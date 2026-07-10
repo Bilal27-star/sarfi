@@ -55,6 +55,10 @@ model User {
   name              String
   email             String   @unique
   passwordHash      String
+  // Vercel Blob public URL (or, local-dev-only, a /uploads/avatars/... path
+  // served from public/ — see src/server/services/avatar-storage.ts). Never
+  // a data: URI — no Base64 blobs in Postgres.
+  avatarUrl         String?
   preferredLanguage Language @default(EN)
   preferredCurrency String   @default("DZD")
   timezone          String   @default("Africa/Algiers")

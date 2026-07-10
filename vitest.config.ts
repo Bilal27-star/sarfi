@@ -10,6 +10,11 @@ export default defineConfig({
     setupFiles: ['tests/setup.ts'],
   },
   resolve: {
-    alias: { '@': path.resolve(__dirname, 'src') },
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      // Next.js aliases this to its own bundled no-op at build time; Vitest
+      // needs the same so server-only modules can be imported in tests.
+      'server-only': path.resolve(__dirname, 'tests/stubs/server-only.ts'),
+    },
   },
 })

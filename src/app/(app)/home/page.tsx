@@ -21,6 +21,7 @@ import {
 } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
 import { ProgressBar } from '@/components/ui/progress'
+import { Avatar } from '@/components/ui/avatar'
 import { RingGauge } from '@/components/ui/ring-gauge'
 import { AnimatedAmount } from '@/components/motion/animated-number'
 import { ExpenseRow } from '@/components/expenses/expense-row'
@@ -113,12 +114,8 @@ export default async function HomePage() {
             </h1>
             <p className="text-meta">{fullDateLabel(now, locale)}</p>
           </div>
-          <Link
-            href="/profile"
-            aria-label={t('navigation.profile')}
-            className="flex size-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-base font-extrabold text-white"
-          >
-            {user.name.charAt(0).toUpperCase()}
+          <Link href="/profile" aria-label={t('navigation.profile')} className="shrink-0 rounded-full">
+            <Avatar name={user.name} avatarUrl={user.avatarUrl} />
           </Link>
         </header>
 

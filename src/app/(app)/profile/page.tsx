@@ -7,6 +7,7 @@ import { getServerTranslator } from '@/i18n/locale-server'
 import { localeFromDbLang } from '@/i18n/config'
 import { ProfileSettings, SettingsRow, SettingsSection, SignOutButton } from './profile-settings'
 import { AppearanceRow } from './appearance-row'
+import { AvatarEditor } from './avatar-editor'
 
 export const metadata: Metadata = { title: 'Profile' }
 
@@ -27,9 +28,7 @@ export default async function ProfilePage() {
 
       {/* Identity — open, no card */}
       <div className="flex items-center gap-4">
-        <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-ink-900 text-xl font-extrabold text-white">
-          {user.name.charAt(0).toUpperCase()}
-        </span>
+        <AvatarEditor name={user.name} avatarUrl={user.avatarUrl} />
         <div className="min-w-0 flex-1">
           <p className="truncate text-title-card text-lg">{user.name}</p>
           <p className="truncate text-sm font-medium text-text-muted">{user.email}</p>
