@@ -9,9 +9,10 @@ async function freshFeedbackModules() {
   vi.resetModules()
   const settings = await import('@/lib/feedback/settings')
   const haptics = await import('@/lib/feedback/haptics')
+  const iosSwitch = await import('@/lib/feedback/ios-switch-haptic')
   const sound = await import('@/lib/feedback/sound')
   const feedbackApi = await import('@/lib/feedback')
-  return { settings, haptics, sound, feedbackApi }
+  return { settings, haptics, iosSwitch, sound, feedbackApi }
 }
 
 describe('feedback settings', () => {
@@ -141,5 +142,64 @@ describe('semantic feedback API', () => {
     feedbackApi.feedback.success()
     expect(vibrateSpy).not.toHaveBeenCalled()
     expect(successCue).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('semantic feedback API — iOS switch-tick fallback', () => {
+  const originalCSSSupports = window.CSS?.supports
+
+  beforeEach(() => {
+    window.localStorage.clear()
+    document.body.innerHTML = ''
+    Object.defineProperty(navigator, 'vibrate', { value: undefined, configurable: true, writable: true })
+  })
+  afterEach(() => {
+    if (originalCSSSupports) window.CSS.supports = originalCSSSupports
+  })
+
+  it('falls back to the iOS switch tick when navigator.vibrate is absent but the switch control is supported', async () => {
+    window.CSS.supports = vi.fn().mockReturnValue(true)
+    const { feedbackApi, iosSwitch } = await freshFeedbackModules()
+    const tickSpy = vi.spyOn(iosSwitch, 'tickIOSSwitchHaptic')
+
+    feedbackApi.feedback.success()
+
+    expect(tickSpy).toHaveBeenCalledTimes(1)
+    // one hidden switch node, reused — not recreated per call
+    feedbackApi.feedback.error()
+    expect(document.querySelectorAll('input[type="checkbox"]').length).toBe(1)
+  })
+
+  it('never throws and triggers nothing when neither vibrate nor the switch control is supported', async () => {
+    window.CSS.supports = vi.fn().mockReturnValue(false)
+    const { feedbackApi } = await freshFeedbackModules()
+
+    expect(() => feedbackApi.feedback.success()).not.toThrow()
+    expect(document.querySelectorAll('input[type="checkbox"]').length).toBe(0)
+  })
+
+  it('prefers navigator.vibrate over the iOS fallback when both are present (Android path unaffected)', async () => {
+    const vibrateSpy = vi.fn().mockReturnValue(true)
+    Object.defineProperty(navigator, 'vibrate', { value: vibrateSpy, configurable: true, writable: true })
+    window.CSS.supports = vi.fn().mockReturnValue(true)
+    const { feedbackApi, iosSwitch } = await freshFeedbackModules()
+    const tickSpy = vi.spyOn(iosSwitch, 'tickIOSSwitchHaptic')
+
+    feedbackApi.feedback.success()
+
+    expect(vibrateSpy).toHaveBeenCalledTimes(1)
+    expect(tickSpy).not.toHaveBeenCalled()
+  })
+
+  it('hapticsSupported() reports true via the switch fallback even without the Vibration API', async () => {
+    window.CSS.supports = vi.fn().mockReturnValue(true)
+    const { feedbackApi } = await freshFeedbackModules()
+    expect(feedbackApi.feedback.hapticsSupported()).toBe(true)
+  })
+
+  it('hapticsSupported() reports false when neither path is available', async () => {
+    window.CSS.supports = vi.fn().mockReturnValue(false)
+    const { feedbackApi } = await freshFeedbackModules()
+    expect(feedbackApi.feedback.hapticsSupported()).toBe(false)
   })
 })
