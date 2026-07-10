@@ -44,7 +44,7 @@ export function Sheet({ open, onClose, title, children, className }: Props) {
         <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
           <motion.button
             aria-label={t('common.close')}
-            className="absolute inset-0 bg-ink-900/45"
+            className="absolute inset-0 bg-[var(--color-overlay-backdrop)]"
             variants={backdropVariants}
             initial="initial"
             animate="animate"
@@ -68,7 +68,7 @@ export function Sheet({ open, onClose, title, children, className }: Props) {
             animate="animate"
             exit="exit"
             className={cn(
-              'relative w-full max-w-lg bg-surface shadow-sheet outline-none',
+              'relative w-full max-w-lg bg-surface-elevated shadow-sheet outline-none',
               'rounded-t-xl md:rounded-xl',
               'max-h-[92dvh] md:max-h-[85dvh] flex flex-col',
               className,

@@ -34,12 +34,23 @@
   --color-surface: #ffffff;
   --color-surface-elevated: #ffffff;
   --color-surface-sunken: #eef1e9;
+  /* Secondary/interactive are for subtly-differentiated blocks (stat rows,
+     hover/active states on clickable rows) — distinct from sunken (recessed
+     controls) and elevated (sheets/modals). */
+  --color-surface-secondary: #f2f4ee;
+  --color-surface-interactive: #eaede4;
   --color-text-primary: #18221b;
   --color-text-secondary: #45514a;
   --color-text-muted: #78857d;
+  --color-text-disabled: #b0b8ab;
   --color-text-on-primary: #0c2913;
   --color-border-subtle: #e4e8de;
   --color-border-strong: #cfd6c9;
+  --color-divider: #e4e8de;
+  --color-overlay-backdrop: rgb(0 0 0 / 0.45);
+  --color-input-background: #ffffff;
+  --color-input-border: #cfd6c9;
+  --color-focus-ring: #3f6fd0;
   --color-primary: #58cc6b;
   --color-primary-hover: #47b95b;
   --color-primary-pressed: #2e9e4f;
@@ -56,6 +67,11 @@
   --color-accent-purple-soft: #ece8fe;
   --color-accent-yellow: #ffd166;
   --color-accent-coral: #ff7a66;
+  --color-chart-grid: #e4e8de;
+  --color-chart-labels: #78857d;
+  --color-nav-background: #ffffff;
+  --color-sheet-background: #ffffff;
+  --color-skeleton: #eef1e9;
 
   /* --- Radii --- */
   --radius-sm: 10px;
@@ -87,6 +103,84 @@
   /* Height of the Transactions sticky controls row (search/filter/chips) —
      shared so per-day group headers can stick just below it, not under it. */
   --transactions-sticky-h: 3.5rem;
+}
+
+/*
+  Dark theme — a deep, subtly green-tinted neutral scale (never pure black),
+  with brand green pulled one step toward leaf-500 to stay premium rather
+  than neon. Overriding the CSS custom properties here is the entire dark
+  mode: every component already consumes semantic tokens (bg-surface,
+  text-text-secondary, border-border-subtle…), so nothing below this block
+  needs to know a "dark mode" exists.
+*/
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* raw palette overrides — recalibrated for legibility on dark surfaces */
+  --color-leaf-100: #16281c;
+  --color-ink-900: #2c352a;
+  --color-ink-700: #3a4538;
+  --color-sun-100: #332a13;
+  --color-sun-600: #f0b94a;
+  --color-coral-100: #3a1f1a;
+  --color-coral-600: #ff6b52;
+  --color-sky-100: #1b2740;
+  --color-sky-600: #7fa8ff;
+  --color-plum-100: #241f3d;
+  --color-plum-600: #a495ff;
+
+  /* surfaces — background < sunken < surface < elevated */
+  --color-background: #10140e;
+  --color-surface: #1e251c;
+  --color-surface-elevated: #262e24;
+  --color-surface-sunken: #171d15;
+  --color-surface-secondary: #1a2118;
+  --color-surface-interactive: #262e24;
+
+  /* text */
+  --color-text-primary: #eef2ea;
+  --color-text-secondary: #b7c2b3;
+  --color-text-muted: #8a9686;
+  --color-text-disabled: #5b645a;
+  --color-text-on-primary: #0c2913;
+
+  /* borders / dividers / overlay */
+  --color-border-subtle: #2a322a;
+  --color-border-strong: #3c463c;
+  --color-divider: #2a322a;
+  --color-overlay-backdrop: rgb(0 0 0 / 0.6);
+
+  /* inputs / focus */
+  --color-input-background: #171d15;
+  --color-input-border: #3c463c;
+  --color-focus-ring: #7fa8ff;
+
+  /* brand green — one step deeper than the light-mode default to avoid a
+     neon look against a dark background; hover brightens, press deepens
+     further, same directional logic as light mode */
+  --color-primary: #47b95b;
+  --color-primary-hover: #58cc6b;
+  --color-primary-pressed: #2e9e4f;
+  --color-primary-soft: #16281c;
+
+  /* status */
+  --color-success: #58cc6b;
+  --color-success-soft: #16281c;
+  --color-warning: #f0b94a;
+  --color-warning-soft: #332a13;
+  --color-danger: #ff6b52;
+  --color-danger-soft: #3a1f1a;
+  --color-info: #7fa8ff;
+  --color-info-soft: #1b2740;
+  --color-accent-purple: #a495ff;
+  --color-accent-purple-soft: #241f3d;
+
+  /* charts / nav / sheet / skeleton */
+  --color-chart-grid: #2a322a;
+  --color-chart-labels: #8a9686;
+  --color-nav-background: #1e251c;
+  --color-sheet-background: #262e24;
+  --color-skeleton: #171d15;
 }
 
 html {
@@ -211,7 +305,7 @@ body {
 
 /* Focus visibility */
 :focus-visible {
-  outline: 2px solid var(--color-info);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: 4px;
 }

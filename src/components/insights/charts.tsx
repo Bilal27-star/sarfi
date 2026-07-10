@@ -91,7 +91,7 @@ export function TrendArea({
         {activePoint && (
           <g>
             <line x1={activePoint.x} x2={activePoint.x} y1={PAD} y2={H - PAD} stroke="var(--color-border-strong)" strokeDasharray="3 3" />
-            <circle cx={activePoint.x} cy={activePoint.y} r={4.5} fill="var(--color-primary-pressed)" stroke="white" strokeWidth={2} />
+            <circle cx={activePoint.x} cy={activePoint.y} r={4.5} fill="var(--color-primary-pressed)" stroke="var(--color-surface)" strokeWidth={2} />
           </g>
         )}
       </svg>

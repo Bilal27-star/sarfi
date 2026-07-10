@@ -37,7 +37,7 @@ export function InsightCard({ title, message, severity, variant = 'banner', clas
 
   return (
     <div className={cn('flex items-start gap-3 rounded-lg p-4', style.tint, className)}>
-      <span className={cn('mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-white/60', style.fg)} aria-hidden>
+      <span className={cn('mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-surface/60', style.fg)} aria-hidden>
         <Icon className="size-4.5" />
       </span>
       <div className="min-w-0">

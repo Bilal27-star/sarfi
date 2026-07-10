@@ -6,6 +6,7 @@ import { formatMoney } from '@/lib/money'
 import { getServerTranslator } from '@/i18n/locale-server'
 import { localeFromDbLang } from '@/i18n/config'
 import { ProfileSettings, SettingsRow, SettingsSection, SignOutButton } from './profile-settings'
+import { AppearanceRow } from './appearance-row'
 
 export const metadata: Metadata = { title: 'Profile' }
 
@@ -57,7 +58,7 @@ export default async function ProfilePage() {
         <SettingsRow icon="wallet" label={t('profile.wallets')} value={String(walletCount)} soon />
         <SettingsRow icon="repeat" label={t('profile.recurringExpenses')} soon />
         <SettingsRow icon="bell" label={t('profile.notifications')} soon />
-        <SettingsRow icon="palette" label={t('profile.appearance')} value={t('profile.appearanceLight')} soon />
+        <AppearanceRow />
       </SettingsSection>
 
       <SettingsSection title={t('profile.sectionData')}>
