@@ -274,6 +274,7 @@ export const fr: typeof en = {
     sectionAccount: 'Compte',
     sectionFinances: 'Finances',
     sectionPreferences: 'Préférences',
+    sectionFeedback: 'Retour sensoriel',
     sectionData: 'Données et confidentialité',
     name: 'Nom',
     language: 'Langue',
@@ -297,6 +298,8 @@ export const fr: typeof en = {
     appearanceLight: 'Clair',
     nameHelper: 'C’est le nom affiché dans toute l’application SARFI.',
     languageHelper: 'Vous pouvez la modifier à tout moment.',
+    soundEffects: 'Effets sonores',
+    hapticFeedback: 'Retour haptique',
   },
   validation: {
     nameMin: 'Le nom doit contenir au moins 2 caractères',

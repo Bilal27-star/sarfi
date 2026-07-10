@@ -281,6 +281,7 @@ export const ar: typeof en = {
     sectionAccount: 'الحساب',
     sectionFinances: 'الماليات',
     sectionPreferences: 'التفضيلات',
+    sectionFeedback: 'التفاعل الحسي',
     sectionData: 'البيانات والخصوصية',
     name: 'الاسم',
     language: 'اللغة',
@@ -304,6 +305,8 @@ export const ar: typeof en = {
     appearanceLight: 'فاتح',
     nameHelper: 'هذا هو الاسم الذي يظهر في جميع أنحاء صرفي.',
     languageHelper: 'يمكنك تغييرها في أي وقت.',
+    soundEffects: 'المؤثرات الصوتية',
+    hapticFeedback: 'الاهتزاز التفاعلي',
   },
   validation: {
     nameMin: 'يجب أن يتكون الاسم من حرفين على الأقل',

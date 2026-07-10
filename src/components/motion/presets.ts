@@ -1,5 +1,5 @@
 /** Centralized motion system — every animated component pulls from here. */
-import type { Transition, Variants } from 'framer-motion'
+import type { TargetAndTransition, Transition, Variants } from 'framer-motion'
 
 export const springSnappy: Transition = { type: 'spring', stiffness: 500, damping: 32, mass: 0.8 }
 export const springSoft: Transition = { type: 'spring', stiffness: 300, damping: 30 }
@@ -43,3 +43,11 @@ export const successPop: Variants = {
 }
 
 export const pressTap = { scale: 0.97 }
+
+/** Error feedback — horizontal shake for a rejected action (e.g. failed
+ * save). Meant for `useAnimationControls().start(shakeX)`, not a Variants
+ * initial/animate pair, since it should replay on demand. */
+export const shakeX: TargetAndTransition = {
+  x: [0, -6, 6, -4, 4, 0],
+  transition: { duration: 0.36, ease: 'easeInOut' },
+}

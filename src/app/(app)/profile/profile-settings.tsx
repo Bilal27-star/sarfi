@@ -16,17 +16,21 @@ import {
   Repeat,
   Shapes,
   ShieldCheck,
+  Vibrate,
+  Volume2,
   Wallet,
   type LucideIcon,
 } from 'lucide-react'
 import { Sheet } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/switch'
 import { updateSettings } from '@/server/services/settings-actions'
 import { signOut } from '@/server/auth/actions'
 import { useT } from '@/i18n/provider'
 import { resolveActionError } from '@/i18n/action-error'
 import { LOCALE_LABELS, type Locale } from '@/i18n/config'
 import { dbLangFromLocale } from '@/i18n/config'
+import { useFeedbackSettings } from '@/lib/feedback/use-feedback-settings'
 import { cn } from '@/lib/utils'
 
 const ICONS: Record<string, LucideIcon> = {
@@ -42,6 +46,8 @@ const ICONS: Record<string, LucideIcon> = {
   shield: ShieldCheck,
   lock: LockKeyhole,
   pencil: Pencil,
+  sound: Volume2,
+  haptics: Vibrate,
 }
 
 /** Quiet settings row — plain icon (no circular chip), hairline divider from
@@ -83,6 +89,29 @@ export function SettingsRow({
   )
 }
 
+/** Same row shape as SettingsRow but ends in a Switch instead of a
+ * chevron/value — used for the Feedback preferences (sound/haptics). */
+export function SettingsToggleRow({
+  icon,
+  label,
+  checked,
+  onChange,
+}: {
+  icon: string
+  label: string
+  checked: boolean
+  onChange: (next: boolean) => void
+}) {
+  const Icon = ICONS[icon] ?? Shapes
+  return (
+    <div className="flex min-h-13 items-center gap-3 py-3">
+      <Icon className="size-4.5 shrink-0 text-text-muted" aria-hidden />
+      <span className="flex-1 text-start text-title-card">{label}</span>
+      <Switch checked={checked} onChange={onChange} label={label} />
+    </div>
+  )
+}
+
 export function SettingsSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
@@ -113,6 +142,7 @@ export function ProfileSettings(props: Props) {
   const [monthStart, setMonthStart] = useState(props.financialMonthStartDay)
   const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
+  const { settings: feedbackSettings, setSetting: setFeedbackSetting } = useFeedbackSettings()
 
   function save(payload: Parameters<typeof updateSettings>[0]) {
     setError(null)
@@ -138,6 +168,21 @@ export function ProfileSettings(props: Props) {
           label={t('profile.monthStartsOn')}
           value={t('profile.dayOf', { day: props.financialMonthStartDay })}
           onClick={() => setTarget('month-start')}
+        />
+      </SettingsSection>
+
+      <SettingsSection title={t('profile.sectionFeedback')}>
+        <SettingsToggleRow
+          icon="sound"
+          label={t('profile.soundEffects')}
+          checked={feedbackSettings.sound}
+          onChange={(v) => setFeedbackSetting('sound', v)}
+        />
+        <SettingsToggleRow
+          icon="haptics"
+          label={t('profile.hapticFeedback')}
+          checked={feedbackSettings.haptics}
+          onChange={(v) => setFeedbackSetting('haptics', v)}
         />
       </SettingsSection>
 

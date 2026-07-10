@@ -276,6 +276,7 @@ export const en = {
     sectionAccount: 'Account',
     sectionFinances: 'Finances',
     sectionPreferences: 'Preferences',
+    sectionFeedback: 'Feedback',
     sectionData: 'Data & privacy',
     name: 'Name',
     language: 'Language',
@@ -299,6 +300,8 @@ export const en = {
     appearanceLight: 'Light',
     nameHelper: 'This is the name shown across SARFI.',
     languageHelper: 'You can change this anytime.',
+    soundEffects: 'Sound effects',
+    hapticFeedback: 'Haptic feedback',
   },
   validation: {
     nameMin: 'Name must be at least 2 characters',

@@ -1,13 +1,14 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState, useTransition } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { Check, ChevronDown, ChevronLeft, Delete } from 'lucide-react'
 import { Sheet } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { CategoryChip } from '@/components/ui/category-chip'
-import { successPop } from '@/components/motion/presets'
+import { successPop, shakeX } from '@/components/motion/presets'
+import { feedback } from '@/lib/feedback'
 import { createExpense } from '@/server/services/expense-actions'
 import { resolveActionError } from '@/i18n/action-error'
 import { useLocale, useT } from '@/i18n/provider'
@@ -51,6 +52,11 @@ export function AddExpenseSheet({ open, onClose, data }: { open: boolean; onClos
   const [success, setSuccess] = useState(false)
   const [saving, startSaving] = useTransition()
   const descriptionRef = useRef<HTMLInputElement>(null)
+  // Belt-and-suspenders guard against a second save firing before the
+  // `saving` transition flips the Button to disabled — the flagship
+  // interaction must persist exactly once even on a rapid double-tap.
+  const submittingRef = useRef(false)
+  const shakeControls = useAnimation()
 
   const reset = useCallback(() => {
     setStep('amount')
@@ -72,6 +78,12 @@ export function AddExpenseSheet({ open, onClose, data }: { open: boolean; onClos
     setPrevOpen(open)
     if (open) reset()
   }
+
+  // Ref mutation belongs outside render — re-arm the double-submit guard
+  // once the sheet is actually open for a fresh entry.
+  useEffect(() => {
+    if (open) submittingRef.current = false
+  }, [open])
 
   const selectedCategory = useMemo(
     () => data.categories.find((c) => c.id === categoryId) ?? null,
@@ -97,11 +109,17 @@ export function AddExpenseSheet({ open, onClose, data }: { open: boolean; onClos
   }
 
   function save() {
+    if (submittingRef.current) return
     if (!categoryId) {
       setError(t('expenses.pickCategoryError'))
       return
     }
+    submittingRef.current = true
     setError(null)
+    // Prime the AudioContext synchronously within this click's user gesture
+    // so the success cue — scheduled later, after the server confirms — can
+    // play without needing a second (potentially too-late) resume.
+    feedback.primeAudio()
     startSaving(async () => {
       const result = await createExpense({
         amount: Number(amount).toFixed(2),
@@ -113,9 +131,15 @@ export function AddExpenseSheet({ open, onClose, data }: { open: boolean; onClos
         expenseDate: date !== toDateInputValue(new Date()) ? date : undefined,
       })
       if (!result.ok) {
+        submittingRef.current = false
         setError(resolveActionError(t, result.errorCode))
+        feedback.error()
+        shakeControls.start(shakeX)
         return
       }
+      // Success feedback fires exactly here — only after the mutation is
+      // confirmed persisted, never optimistically.
+      feedback.success()
       setSuccess(true)
       router.refresh()
       setTimeout(onClose, 950)
@@ -379,9 +403,11 @@ export function AddExpenseSheet({ open, onClose, data }: { open: boolean; onClos
                     {error}
                   </p>
                 )}
-                <Button full size="lg" className="mt-4" loading={saving} disabled={!categoryId} onClick={save}>
-                  {t('expenses.saveExpense')}
-                </Button>
+                <motion.div animate={shakeControls} className="mt-4">
+                  <Button full size="lg" loading={saving} disabled={!categoryId} onClick={save}>
+                    {t('expenses.saveExpense')}
+                  </Button>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
