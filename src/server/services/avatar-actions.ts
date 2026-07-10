@@ -69,8 +69,9 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResult> {
 
     revalidatePath('/', 'layout')
     return { ok: true }
-  } catch {
-    return { ok: false, errorCode: 'save_failed' }
+  } catch (e) {
+    console.error('uploadAvatar failed', e)
+    return { ok: false, errorCode: 'avatar_upload_failed' }
   }
 }
 
@@ -83,7 +84,8 @@ export async function removeAvatar(): Promise<ActionResult> {
     await deleteAvatar(previousUrl)
     revalidatePath('/', 'layout')
     return { ok: true }
-  } catch {
-    return { ok: false, errorCode: 'delete_failed' }
+  } catch (e) {
+    console.error('removeAvatar failed', e)
+    return { ok: false, errorCode: 'avatar_remove_failed' }
   }
 }

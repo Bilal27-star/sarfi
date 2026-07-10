@@ -325,6 +325,7 @@ export const ar: typeof en = {
       errorTooLarge: 'هذه الصورة كبيرة جداً. يرجى اختيار صورة أصغر من 20 ميغابايت.',
       errorProcessing: 'تعذّرت معالجة هذه الصورة. يرجى تجربة صورة أخرى.',
       errorStorageUnavailable: 'رفع الصور غير متاح حالياً. يرجى المحاولة لاحقاً.',
+      errorRemoveFailed: 'تعذّرت إزالة صورتك. يرجى المحاولة مرة أخرى.',
     },
   },
   validation: {

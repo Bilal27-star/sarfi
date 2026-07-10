@@ -320,6 +320,7 @@ export const en = {
       errorTooLarge: 'That photo is too large. Please choose one under 20 MB.',
       errorProcessing: 'Could not process that photo. Please try a different one.',
       errorStorageUnavailable: 'Photo uploads aren’t available right now. Please try again later.',
+      errorRemoveFailed: 'Could not remove your photo. Please try again.',
     },
   },
   validation: {

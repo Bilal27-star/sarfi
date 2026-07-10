@@ -318,6 +318,7 @@ export const fr: typeof en = {
       errorTooLarge: 'Cette photo est trop volumineuse. Veuillez en choisir une de moins de 20 Mo.',
       errorProcessing: 'Impossible de traiter cette photo. Veuillez en essayer une autre.',
       errorStorageUnavailable: 'L’envoi de photos n’est pas disponible pour le moment. Veuillez réessayer plus tard.',
+      errorRemoveFailed: 'Impossible de supprimer votre photo. Veuillez réessayer.',
     },
   },
   validation: {

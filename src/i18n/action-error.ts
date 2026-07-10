@@ -16,6 +16,8 @@ export type ActionErrorCode =
   | 'avatar_invalid_type'
   | 'avatar_too_large'
   | 'avatar_storage_unavailable'
+  | 'avatar_upload_failed'
+  | 'avatar_remove_failed'
 
 export function resolveActionError(t: Translator, code: ActionErrorCode): string {
   switch (code) {
@@ -37,6 +39,10 @@ export function resolveActionError(t: Translator, code: ActionErrorCode): string
       return t('profile.avatar.errorTooLarge')
     case 'avatar_storage_unavailable':
       return t('profile.avatar.errorStorageUnavailable')
+    case 'avatar_upload_failed':
+      return t('profile.avatar.errorProcessing')
+    case 'avatar_remove_failed':
+      return t('profile.avatar.errorRemoveFailed')
     case 'save_failed':
     default:
       return t('expenses.savingError')
