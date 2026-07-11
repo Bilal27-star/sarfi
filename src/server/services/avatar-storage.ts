@@ -47,7 +47,14 @@ export class AvatarStorageNotConfiguredError extends Error {
 
 export async function storeAvatar(key: string, buffer: Buffer, contentType: string): Promise<string> {
   if (usingVercelBlob) {
-    const blob = await put(key, buffer, { access: 'public', contentType, addRandomSuffix: false })
+    // Node Buffers under Buffer.poolSize (small ones — sharp's webp output
+    // for a 512x512 avatar always qualifies) are views into a shared
+    // internal ArrayBuffer pool. @vercel/blob's fetch-based upload rejects
+    // that ("SharedArrayBuffer is not allowed") because the body's
+    // .buffer isn't sized to just this chunk. copyBytesFrom forces a
+    // fresh, exactly-sized ArrayBuffer, sidestepping Node's pool entirely.
+    const body = Buffer.copyBytesFrom(buffer)
+    const blob = await put(key, body, { access: 'public', contentType, addRandomSuffix: false })
     return blob.url
   }
   if (process.env.VERCEL) {
