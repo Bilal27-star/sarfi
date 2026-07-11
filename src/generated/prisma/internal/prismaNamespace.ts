@@ -1470,6 +1470,7 @@ export const WalletScalarFieldEnum = {
   icon: 'icon',
   color: 'color',
   isArchived: 'isArchived',
+  sortOrder: 'sortOrder',
   createdAt: 'createdAt'
 } as const
 

@@ -115,6 +115,7 @@ model Wallet {
   icon       String     @default("wallet")
   color      String     @default("primary")
   isArchived Boolean    @default(false)
+  sortOrder  Int        @default(0)
   createdAt  DateTime   @default(now())
 
   expenses  Expense[]

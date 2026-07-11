@@ -199,7 +199,7 @@ export async function getSystemAndUserCategories(userId: string) {
 export async function getWallets(userId: string) {
   return db.wallet.findMany({
     where: { userId, isArchived: false },
-    orderBy: { createdAt: 'asc' },
+    orderBy: { sortOrder: 'asc' },
     select: { id: true, name: true, type: true, icon: true, color: true },
   })
 }

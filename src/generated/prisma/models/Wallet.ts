@@ -28,10 +28,12 @@ export type AggregateWallet = {
 
 export type WalletAvgAggregateOutputType = {
   balance: runtime.Decimal | null
+  sortOrder: number | null
 }
 
 export type WalletSumAggregateOutputType = {
   balance: runtime.Decimal | null
+  sortOrder: number | null
 }
 
 export type WalletMinAggregateOutputType = {
@@ -44,6 +46,7 @@ export type WalletMinAggregateOutputType = {
   icon: string | null
   color: string | null
   isArchived: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
 }
 
@@ -57,6 +60,7 @@ export type WalletMaxAggregateOutputType = {
   icon: string | null
   color: string | null
   isArchived: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
 }
 
@@ -70,6 +74,7 @@ export type WalletCountAggregateOutputType = {
   icon: number
   color: number
   isArchived: number
+  sortOrder: number
   createdAt: number
   _all: number
 }
@@ -77,10 +82,12 @@ export type WalletCountAggregateOutputType = {
 
 export type WalletAvgAggregateInputType = {
   balance?: true
+  sortOrder?: true
 }
 
 export type WalletSumAggregateInputType = {
   balance?: true
+  sortOrder?: true
 }
 
 export type WalletMinAggregateInputType = {
@@ -93,6 +100,7 @@ export type WalletMinAggregateInputType = {
   icon?: true
   color?: true
   isArchived?: true
+  sortOrder?: true
   createdAt?: true
 }
 
@@ -106,6 +114,7 @@ export type WalletMaxAggregateInputType = {
   icon?: true
   color?: true
   isArchived?: true
+  sortOrder?: true
   createdAt?: true
 }
 
@@ -119,6 +128,7 @@ export type WalletCountAggregateInputType = {
   icon?: true
   color?: true
   isArchived?: true
+  sortOrder?: true
   createdAt?: true
   _all?: true
 }
@@ -219,6 +229,7 @@ export type WalletGroupByOutputType = {
   icon: string
   color: string
   isArchived: boolean
+  sortOrder: number
   createdAt: Date
   _count: WalletCountAggregateOutputType | null
   _avg: WalletAvgAggregateOutputType | null
@@ -255,6 +266,7 @@ export type WalletWhereInput = {
   icon?: Prisma.StringFilter<"Wallet"> | string
   color?: Prisma.StringFilter<"Wallet"> | string
   isArchived?: Prisma.BoolFilter<"Wallet"> | boolean
+  sortOrder?: Prisma.IntFilter<"Wallet"> | number
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expenses?: Prisma.ExpenseListRelationFilter
@@ -271,6 +283,7 @@ export type WalletOrderByWithRelationInput = {
   icon?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
@@ -290,6 +303,7 @@ export type WalletWhereUniqueInput = Prisma.AtLeast<{
   icon?: Prisma.StringFilter<"Wallet"> | string
   color?: Prisma.StringFilter<"Wallet"> | string
   isArchived?: Prisma.BoolFilter<"Wallet"> | boolean
+  sortOrder?: Prisma.IntFilter<"Wallet"> | number
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expenses?: Prisma.ExpenseListRelationFilter
@@ -306,6 +320,7 @@ export type WalletOrderByWithAggregationInput = {
   icon?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.WalletCountOrderByAggregateInput
   _avg?: Prisma.WalletAvgOrderByAggregateInput
@@ -327,6 +342,7 @@ export type WalletScalarWhereWithAggregatesInput = {
   icon?: Prisma.StringWithAggregatesFilter<"Wallet"> | string
   color?: Prisma.StringWithAggregatesFilter<"Wallet"> | string
   isArchived?: Prisma.BoolWithAggregatesFilter<"Wallet"> | boolean
+  sortOrder?: Prisma.IntWithAggregatesFilter<"Wallet"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Wallet"> | Date | string
 }
 
@@ -339,6 +355,7 @@ export type WalletCreateInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutWalletsInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutWalletInput
@@ -355,6 +372,7 @@ export type WalletUncheckedCreateInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutWalletInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutWalletInput
@@ -369,6 +387,7 @@ export type WalletUpdateInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutWalletNestedInput
@@ -385,6 +404,7 @@ export type WalletUncheckedUpdateInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutWalletNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutWalletNestedInput
@@ -400,6 +420,7 @@ export type WalletCreateManyInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
 }
 
@@ -412,6 +433,7 @@ export type WalletUpdateManyMutationInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -425,6 +447,7 @@ export type WalletUncheckedUpdateManyInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -448,11 +471,13 @@ export type WalletCountOrderByAggregateInput = {
   icon?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type WalletAvgOrderByAggregateInput = {
   balance?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type WalletMaxOrderByAggregateInput = {
@@ -465,6 +490,7 @@ export type WalletMaxOrderByAggregateInput = {
   icon?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -478,11 +504,13 @@ export type WalletMinOrderByAggregateInput = {
   icon?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type WalletSumOrderByAggregateInput = {
   balance?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type WalletNullableScalarRelationFilter = {
@@ -585,6 +613,7 @@ export type WalletCreateWithoutUserInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   expenses?: Prisma.ExpenseCreateNestedManyWithoutWalletInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutWalletInput
@@ -599,6 +628,7 @@ export type WalletUncheckedCreateWithoutUserInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutWalletInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutWalletInput
@@ -643,6 +673,7 @@ export type WalletScalarWhereInput = {
   icon?: Prisma.StringFilter<"Wallet"> | string
   color?: Prisma.StringFilter<"Wallet"> | string
   isArchived?: Prisma.BoolFilter<"Wallet"> | boolean
+  sortOrder?: Prisma.IntFilter<"Wallet"> | number
   createdAt?: Prisma.DateTimeFilter<"Wallet"> | Date | string
 }
 
@@ -655,6 +686,7 @@ export type WalletCreateWithoutExpensesInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutWalletsInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutWalletInput
@@ -670,6 +702,7 @@ export type WalletUncheckedCreateWithoutExpensesInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutWalletInput
 }
@@ -699,6 +732,7 @@ export type WalletUpdateWithoutExpensesInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutWalletNestedInput
@@ -714,6 +748,7 @@ export type WalletUncheckedUpdateWithoutExpensesInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutWalletNestedInput
 }
@@ -727,6 +762,7 @@ export type WalletCreateWithoutRecurringInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutWalletsInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutWalletInput
@@ -742,6 +778,7 @@ export type WalletUncheckedCreateWithoutRecurringInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutWalletInput
 }
@@ -771,6 +808,7 @@ export type WalletUpdateWithoutRecurringInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutWalletsNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutWalletNestedInput
@@ -786,6 +824,7 @@ export type WalletUncheckedUpdateWithoutRecurringInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutWalletNestedInput
 }
@@ -799,6 +838,7 @@ export type WalletCreateManyUserInput = {
   icon?: string
   color?: string
   isArchived?: boolean
+  sortOrder?: number
   createdAt?: Date | string
 }
 
@@ -811,6 +851,7 @@ export type WalletUpdateWithoutUserInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expenses?: Prisma.ExpenseUpdateManyWithoutWalletNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutWalletNestedInput
@@ -825,6 +866,7 @@ export type WalletUncheckedUpdateWithoutUserInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutWalletNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutWalletNestedInput
@@ -839,6 +881,7 @@ export type WalletUncheckedUpdateManyWithoutUserInput = {
   icon?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -892,6 +935,7 @@ export type WalletSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   icon?: boolean
   color?: boolean
   isArchived?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   expenses?: boolean | Prisma.Wallet$expensesArgs<ExtArgs>
@@ -909,6 +953,7 @@ export type WalletSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   icon?: boolean
   color?: boolean
   isArchived?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wallet"]>
@@ -923,6 +968,7 @@ export type WalletSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   icon?: boolean
   color?: boolean
   isArchived?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wallet"]>
@@ -937,10 +983,11 @@ export type WalletSelectScalar = {
   icon?: boolean
   color?: boolean
   isArchived?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
 }
 
-export type WalletOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "balance" | "currency" | "icon" | "color" | "isArchived" | "createdAt", ExtArgs["result"]["wallet"]>
+export type WalletOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "balance" | "currency" | "icon" | "color" | "isArchived" | "sortOrder" | "createdAt", ExtArgs["result"]["wallet"]>
 export type WalletInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   expenses?: boolean | Prisma.Wallet$expensesArgs<ExtArgs>
@@ -971,6 +1018,7 @@ export type $WalletPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     icon: string
     color: string
     isArchived: boolean
+    sortOrder: number
     createdAt: Date
   }, ExtArgs["result"]["wallet"]>
   composites: {}
@@ -1407,6 +1455,7 @@ export interface WalletFieldRefs {
   readonly icon: Prisma.FieldRef<"Wallet", 'String'>
   readonly color: Prisma.FieldRef<"Wallet", 'String'>
   readonly isArchived: Prisma.FieldRef<"Wallet", 'Boolean'>
+  readonly sortOrder: Prisma.FieldRef<"Wallet", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Wallet", 'DateTime'>
 }
     
