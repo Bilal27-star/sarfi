@@ -69,6 +69,7 @@ model User {
   sessions          Session[]
   wallets           Wallet[]
   categories        Category[]
+  categoryPrefs     UserCategoryPreference[]
   expenses          Expense[]
   budgets           Budget[]
   savingsGoals      SavingsGoal[]
@@ -141,9 +142,27 @@ model Category {
   expenses  Expense[]
   budgets   Budget[]
   recurring RecurringExpense[]
+  userPrefs UserCategoryPreference[]
 
   @@unique([userId, slug])
   @@index([parentId])
+}
+
+// Per-user override for shared (system, userId: null) categories — a user's
+// own categories carry sortOrder/isArchived directly on Category and never
+// need a row here. Lets one user hide/reorder a default category without
+// affecting every other user who references the same shared row.
+model UserCategoryPreference {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  hidden     Boolean  @default(false)
+  sortOrder  Int      @default(0)
+
+  @@unique([userId, categoryId])
+  @@index([userId])
 }
 
 model Expense {

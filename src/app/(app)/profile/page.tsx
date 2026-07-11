@@ -19,7 +19,7 @@ export default async function ProfilePage() {
     db.wallet.count({ where: { userId: user.id, isArchived: false } }),
     db.expense.count({ where: { userId: user.id } }),
     db.dailyTracking.count({ where: { userId: user.id, trackingCompleted: true } }),
-    db.category.count({ where: { isSystem: true } }),
+    db.category.count({ where: { parentId: null, OR: [{ userId: null }, { userId: user.id, isArchived: false }] } }),
   ])
 
   return (
@@ -53,7 +53,7 @@ export default async function ProfilePage() {
 
       {/* Roadmap-safe: visible, honest, de-emphasized rather than hidden or oversold */}
       <SettingsSection title={t('profile.sectionPreferences')}>
-        <SettingsRow icon="shapes" label={t('profile.categories')} value={t('profile.systemCategories', { count: categoryCount })} soon />
+        <SettingsRow icon="shapes" label={t('profile.categories')} value={t('profile.categoriesManage.totalCount', { count: categoryCount })} href="/profile/categories" />
         <SettingsRow icon="wallet" label={t('profile.wallets')} value={String(walletCount)} soon />
         <SettingsRow icon="repeat" label={t('profile.recurringExpenses')} soon />
         <SettingsRow icon="bell" label={t('profile.notifications')} soon />

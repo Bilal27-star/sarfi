@@ -174,16 +174,26 @@ export async function dailyTotals(userId: string, range: DateRange): Promise<Dai
     .map(([date, total]) => ({ date, total }))
 }
 
+/** Categories available for picking (Add Expense, filters, detail view) —
+ * excludes anything the user has hidden via UserCategoryPreference and
+ * respects their effective per-user ordering. See categories.ts for the
+ * fuller management-screen query (which also surfaces hidden ones). */
 export async function getSystemAndUserCategories(userId: string) {
-  return db.category.findMany({
+  const rows = await db.category.findMany({
     where: {
       OR: [{ userId: null }, { userId }],
       isArchived: false,
       parentId: null,
     },
-    orderBy: { sortOrder: 'asc' },
-    include: { children: { where: { isArchived: false }, orderBy: { sortOrder: 'asc' } } },
+    include: {
+      children: { where: { isArchived: false }, orderBy: { sortOrder: 'asc' } },
+      userPrefs: { where: { userId } },
+    },
   })
+  return rows
+    .filter((c) => c.userId === userId || !c.userPrefs[0]?.hidden)
+    .map((c) => ({ ...c, sortOrder: c.userId === userId ? c.sortOrder : (c.userPrefs[0]?.sortOrder ?? c.sortOrder) }))
+    .sort((a, b) => a.sortOrder - b.sortOrder)
 }
 
 export async function getWallets(userId: string) {

@@ -262,6 +262,7 @@ export type CategoryWhereInput = {
   expenses?: Prisma.ExpenseListRelationFilter
   budgets?: Prisma.BudgetListRelationFilter
   recurring?: Prisma.RecurringExpenseListRelationFilter
+  userPrefs?: Prisma.UserCategoryPreferenceListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -281,6 +282,7 @@ export type CategoryOrderByWithRelationInput = {
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
   budgets?: Prisma.BudgetOrderByRelationAggregateInput
   recurring?: Prisma.RecurringExpenseOrderByRelationAggregateInput
+  userPrefs?: Prisma.UserCategoryPreferenceOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -304,6 +306,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   expenses?: Prisma.ExpenseListRelationFilter
   budgets?: Prisma.BudgetListRelationFilter
   recurring?: Prisma.RecurringExpenseListRelationFilter
+  userPrefs?: Prisma.UserCategoryPreferenceListRelationFilter
 }, "id" | "userId_slug">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -355,6 +358,7 @@ export type CategoryCreateInput = {
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -372,6 +376,7 @@ export type CategoryUncheckedCreateInput = {
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -389,6 +394,7 @@ export type CategoryUpdateInput = {
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -406,6 +412,7 @@ export type CategoryUncheckedUpdateInput = {
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -617,6 +624,20 @@ export type CategoryUncheckedUpdateManyWithoutParentNestedInput = {
   deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
 }
 
+export type CategoryCreateNestedOneWithoutUserPrefsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUserPrefsInput, Prisma.CategoryUncheckedCreateWithoutUserPrefsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUserPrefsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneRequiredWithoutUserPrefsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUserPrefsInput, Prisma.CategoryUncheckedCreateWithoutUserPrefsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUserPrefsInput
+  upsert?: Prisma.CategoryUpsertWithoutUserPrefsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutUserPrefsInput, Prisma.CategoryUpdateWithoutUserPrefsInput>, Prisma.CategoryUncheckedUpdateWithoutUserPrefsInput>
+}
+
 export type CategoryCreateNestedOneWithoutExpensesInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutExpensesInput, Prisma.CategoryUncheckedCreateWithoutExpensesInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutExpensesInput
@@ -675,6 +696,7 @@ export type CategoryCreateWithoutUserInput = {
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutUserInput = {
@@ -691,6 +713,7 @@ export type CategoryUncheckedCreateWithoutUserInput = {
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutUserInput = {
@@ -749,6 +772,7 @@ export type CategoryCreateWithoutChildrenInput = {
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutChildrenInput = {
@@ -765,6 +789,7 @@ export type CategoryUncheckedCreateWithoutChildrenInput = {
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutChildrenInput = {
@@ -786,6 +811,7 @@ export type CategoryCreateWithoutParentInput = {
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutParentInput = {
@@ -802,6 +828,7 @@ export type CategoryUncheckedCreateWithoutParentInput = {
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutParentInput = {
@@ -839,6 +866,7 @@ export type CategoryUpdateWithoutChildrenInput = {
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutChildrenInput = {
@@ -855,6 +883,7 @@ export type CategoryUncheckedUpdateWithoutChildrenInput = {
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUpsertWithWhereUniqueWithoutParentInput = {
@@ -873,6 +902,90 @@ export type CategoryUpdateManyWithWhereWithoutParentInput = {
   data: Prisma.XOR<Prisma.CategoryUpdateManyMutationInput, Prisma.CategoryUncheckedUpdateManyWithoutParentInput>
 }
 
+export type CategoryCreateWithoutUserPrefsInput = {
+  id?: string
+  name: string
+  slug: string
+  icon: string
+  color: string
+  isSystem?: boolean
+  isArchived?: boolean
+  sortOrder?: number
+  user?: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  parent?: Prisma.CategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CategoryCreateNestedManyWithoutParentInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
+  recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutUserPrefsInput = {
+  id?: string
+  userId?: string | null
+  name: string
+  slug: string
+  icon: string
+  color: string
+  parentId?: string | null
+  isSystem?: boolean
+  isArchived?: boolean
+  sortOrder?: number
+  children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
+  recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutUserPrefsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutUserPrefsInput, Prisma.CategoryUncheckedCreateWithoutUserPrefsInput>
+}
+
+export type CategoryUpsertWithoutUserPrefsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutUserPrefsInput, Prisma.CategoryUncheckedUpdateWithoutUserPrefsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutUserPrefsInput, Prisma.CategoryUncheckedCreateWithoutUserPrefsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutUserPrefsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutUserPrefsInput, Prisma.CategoryUncheckedUpdateWithoutUserPrefsInput>
+}
+
+export type CategoryUpdateWithoutUserPrefsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  user?: Prisma.UserUpdateOneWithoutCategoriesNestedInput
+  parent?: Prisma.CategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
+  recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutUserPrefsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
+  recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
 export type CategoryCreateWithoutExpensesInput = {
   id?: string
   name: string
@@ -887,6 +1000,7 @@ export type CategoryCreateWithoutExpensesInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutExpensesInput = {
@@ -903,6 +1017,7 @@ export type CategoryUncheckedCreateWithoutExpensesInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutExpensesInput = {
@@ -935,6 +1050,7 @@ export type CategoryUpdateWithoutExpensesInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutExpensesInput = {
@@ -951,6 +1067,7 @@ export type CategoryUncheckedUpdateWithoutExpensesInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutBudgetsInput = {
@@ -967,6 +1084,7 @@ export type CategoryCreateWithoutBudgetsInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutBudgetsInput = {
@@ -983,6 +1101,7 @@ export type CategoryUncheckedCreateWithoutBudgetsInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   recurring?: Prisma.RecurringExpenseUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutBudgetsInput = {
@@ -1015,6 +1134,7 @@ export type CategoryUpdateWithoutBudgetsInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutBudgetsInput = {
@@ -1031,6 +1151,7 @@ export type CategoryUncheckedUpdateWithoutBudgetsInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutRecurringInput = {
@@ -1047,6 +1168,7 @@ export type CategoryCreateWithoutRecurringInput = {
   children?: Prisma.CategoryCreateNestedManyWithoutParentInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutRecurringInput = {
@@ -1063,6 +1185,7 @@ export type CategoryUncheckedCreateWithoutRecurringInput = {
   children?: Prisma.CategoryUncheckedCreateNestedManyWithoutParentInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCategoryInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutCategoryInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutRecurringInput = {
@@ -1095,6 +1218,7 @@ export type CategoryUpdateWithoutRecurringInput = {
   children?: Prisma.CategoryUpdateManyWithoutParentNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutRecurringInput = {
@@ -1111,6 +1235,7 @@ export type CategoryUncheckedUpdateWithoutRecurringInput = {
   children?: Prisma.CategoryUncheckedUpdateManyWithoutParentNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyUserInput = {
@@ -1139,6 +1264,7 @@ export type CategoryUpdateWithoutUserInput = {
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutUserInput = {
@@ -1155,6 +1281,7 @@ export type CategoryUncheckedUpdateWithoutUserInput = {
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutUserInput = {
@@ -1195,6 +1322,7 @@ export type CategoryUpdateWithoutParentInput = {
   expenses?: Prisma.ExpenseUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutParentInput = {
@@ -1211,6 +1339,7 @@ export type CategoryUncheckedUpdateWithoutParentInput = {
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCategoryNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutCategoryNestedInput
   recurring?: Prisma.RecurringExpenseUncheckedUpdateManyWithoutCategoryNestedInput
+  userPrefs?: Prisma.UserCategoryPreferenceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutParentInput = {
@@ -1235,6 +1364,7 @@ export type CategoryCountOutputType = {
   expenses: number
   budgets: number
   recurring: number
+  userPrefs: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1242,6 +1372,7 @@ export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   expenses?: boolean | CategoryCountOutputTypeCountExpensesArgs
   budgets?: boolean | CategoryCountOutputTypeCountBudgetsArgs
   recurring?: boolean | CategoryCountOutputTypeCountRecurringArgs
+  userPrefs?: boolean | CategoryCountOutputTypeCountUserPrefsArgs
 }
 
 /**
@@ -1282,6 +1413,13 @@ export type CategoryCountOutputTypeCountRecurringArgs<ExtArgs extends runtime.Ty
   where?: Prisma.RecurringExpenseWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountUserPrefsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserCategoryPreferenceWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1300,6 +1438,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   expenses?: boolean | Prisma.Category$expensesArgs<ExtArgs>
   budgets?: boolean | Prisma.Category$budgetsArgs<ExtArgs>
   recurring?: boolean | Prisma.Category$recurringArgs<ExtArgs>
+  userPrefs?: boolean | Prisma.Category$userPrefsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -1354,6 +1493,7 @@ export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   expenses?: boolean | Prisma.Category$expensesArgs<ExtArgs>
   budgets?: boolean | Prisma.Category$budgetsArgs<ExtArgs>
   recurring?: boolean | Prisma.Category$recurringArgs<ExtArgs>
+  userPrefs?: boolean | Prisma.Category$userPrefsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1374,6 +1514,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
     budgets: Prisma.$BudgetPayload<ExtArgs>[]
     recurring: Prisma.$RecurringExpensePayload<ExtArgs>[]
+    userPrefs: Prisma.$UserCategoryPreferencePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1786,6 +1927,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   expenses<T extends Prisma.Category$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   budgets<T extends Prisma.Category$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recurring<T extends Prisma.Category$recurringArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$recurringArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecurringExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userPrefs<T extends Prisma.Category$userPrefsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$userPrefsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserCategoryPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2357,6 +2499,30 @@ export type Category$recurringArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.RecurringExpenseScalarFieldEnum | Prisma.RecurringExpenseScalarFieldEnum[]
+}
+
+/**
+ * Category.userPrefs
+ */
+export type Category$userPrefsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCategoryPreference
+   */
+  select?: Prisma.UserCategoryPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserCategoryPreference
+   */
+  omit?: Prisma.UserCategoryPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserCategoryPreferenceInclude<ExtArgs> | null
+  where?: Prisma.UserCategoryPreferenceWhereInput
+  orderBy?: Prisma.UserCategoryPreferenceOrderByWithRelationInput | Prisma.UserCategoryPreferenceOrderByWithRelationInput[]
+  cursor?: Prisma.UserCategoryPreferenceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserCategoryPreferenceScalarFieldEnum | Prisma.UserCategoryPreferenceScalarFieldEnum[]
 }
 
 /**

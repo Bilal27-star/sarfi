@@ -389,6 +389,7 @@ export const ModelName = {
   UserPreferences: 'UserPreferences',
   Wallet: 'Wallet',
   Category: 'Category',
+  UserCategoryPreference: 'UserCategoryPreference',
   Expense: 'Expense',
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "userPreferences" | "wallet" | "category" | "expense" | "budget" | "savingsGoal" | "recurringExpense" | "achievement" | "userAchievement" | "dailyTracking"
+    modelProps: "user" | "session" | "userPreferences" | "wallet" | "category" | "userCategoryPreference" | "expense" | "budget" | "savingsGoal" | "recurringExpense" | "achievement" | "userAchievement" | "dailyTracking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -782,6 +783,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CategoryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserCategoryPreference: {
+      payload: Prisma.$UserCategoryPreferencePayload<ExtArgs>
+      fields: Prisma.UserCategoryPreferenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserCategoryPreferenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserCategoryPreferenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        findFirst: {
+          args: Prisma.UserCategoryPreferenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserCategoryPreferenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        findMany: {
+          args: Prisma.UserCategoryPreferenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>[]
+        }
+        create: {
+          args: Prisma.UserCategoryPreferenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        createMany: {
+          args: Prisma.UserCategoryPreferenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserCategoryPreferenceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>[]
+        }
+        delete: {
+          args: Prisma.UserCategoryPreferenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        update: {
+          args: Prisma.UserCategoryPreferenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserCategoryPreferenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserCategoryPreferenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserCategoryPreferenceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserCategoryPreferenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryPreferencePayload>
+        }
+        aggregate: {
+          args: Prisma.UserCategoryPreferenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserCategoryPreference>
+        }
+        groupBy: {
+          args: Prisma.UserCategoryPreferenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCategoryPreferenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserCategoryPreferenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCategoryPreferenceCountAggregateOutputType> | number
         }
       }
     }
@@ -1417,6 +1492,17 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+export const UserCategoryPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  hidden: 'hidden',
+  sortOrder: 'sortOrder'
+} as const
+
+export type UserCategoryPreferenceScalarFieldEnum = (typeof UserCategoryPreferenceScalarFieldEnum)[keyof typeof UserCategoryPreferenceScalarFieldEnum]
+
+
 export const ExpenseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1816,6 +1902,7 @@ export type GlobalOmitConfig = {
   userPreferences?: Prisma.UserPreferencesOmit
   wallet?: Prisma.WalletOmit
   category?: Prisma.CategoryOmit
+  userCategoryPreference?: Prisma.UserCategoryPreferenceOmit
   expense?: Prisma.ExpenseOmit
   budget?: Prisma.BudgetOmit
   savingsGoal?: Prisma.SavingsGoalOmit

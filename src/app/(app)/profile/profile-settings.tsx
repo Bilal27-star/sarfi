@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import {
   Bell,
   CalendarDays,
@@ -57,12 +58,14 @@ export function SettingsRow({
   label,
   value,
   soon,
+  href,
   onClick,
 }: {
   icon: string
   label: string
   value?: string
   soon?: boolean
+  href?: string
   onClick?: () => void
 }) {
   const t = useT()
@@ -81,6 +84,13 @@ export function SettingsRow({
   )
   if (soon) {
     return <div className="flex min-h-13 items-center gap-3 py-3 opacity-60">{content}</div>
+  }
+  if (href) {
+    return (
+      <Link href={href} className="flex min-h-13 w-full items-center gap-3 py-3 text-start">
+        {content}
+      </Link>
+    )
   }
   return (
     <button type="button" onClick={onClick} className="flex min-h-13 w-full items-center gap-3 py-3 text-start">

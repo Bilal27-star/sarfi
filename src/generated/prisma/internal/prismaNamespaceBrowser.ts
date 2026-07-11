@@ -56,6 +56,7 @@ export const ModelName = {
   UserPreferences: 'UserPreferences',
   Wallet: 'Wallet',
   Category: 'Category',
+  UserCategoryPreference: 'UserCategoryPreference',
   Expense: 'Expense',
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
@@ -154,6 +155,17 @@ export const CategoryScalarFieldEnum = {
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const UserCategoryPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  hidden: 'hidden',
+  sortOrder: 'sortOrder'
+} as const
+
+export type UserCategoryPreferenceScalarFieldEnum = (typeof UserCategoryPreferenceScalarFieldEnum)[keyof typeof UserCategoryPreferenceScalarFieldEnum]
 
 
 export const ExpenseScalarFieldEnum = {

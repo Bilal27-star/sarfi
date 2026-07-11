@@ -18,6 +18,7 @@ export type ActionErrorCode =
   | 'avatar_storage_unavailable'
   | 'avatar_upload_failed'
   | 'avatar_remove_failed'
+  | 'category_forbidden'
 
 export function resolveActionError(t: Translator, code: ActionErrorCode): string {
   switch (code) {
@@ -43,6 +44,8 @@ export function resolveActionError(t: Translator, code: ActionErrorCode): string
       return t('profile.avatar.errorProcessing')
     case 'avatar_remove_failed':
       return t('profile.avatar.errorRemoveFailed')
+    case 'category_forbidden':
+      return t('profile.categoriesManage.errorForbidden')
     case 'save_failed':
     default:
       return t('expenses.savingError')
