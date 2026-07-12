@@ -20,6 +20,7 @@ export type ActionErrorCode =
   | 'avatar_remove_failed'
   | 'category_forbidden'
   | 'wallet_forbidden'
+  | 'recurring_forbidden'
 
 export function resolveActionError(t: Translator, code: ActionErrorCode): string {
   switch (code) {
@@ -49,6 +50,8 @@ export function resolveActionError(t: Translator, code: ActionErrorCode): string
       return t('profile.categoriesManage.errorForbidden')
     case 'wallet_forbidden':
       return t('profile.walletsManage.errorForbidden')
+    case 'recurring_forbidden':
+      return t('profile.recurringManage.errorForbidden')
     case 'save_failed':
     default:
       return t('expenses.savingError')

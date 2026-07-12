@@ -14,12 +14,13 @@ export const metadata: Metadata = { title: 'Profile' }
 export default async function ProfilePage() {
   const user = (await getCurrentUser())!
   const { locale, t } = await getServerTranslator()
-  const [budget, walletCount, expenseCount, streakDays, categoryCount] = await Promise.all([
+  const [budget, walletCount, expenseCount, streakDays, categoryCount, recurringCount] = await Promise.all([
     getOverallBudget(user.id),
     db.wallet.count({ where: { userId: user.id, isArchived: false } }),
     db.expense.count({ where: { userId: user.id } }),
     db.dailyTracking.count({ where: { userId: user.id, trackingCompleted: true } }),
     db.category.count({ where: { parentId: null, OR: [{ userId: null }, { userId: user.id, isArchived: false }] } }),
+    db.recurringExpense.count({ where: { userId: user.id } }),
   ])
 
   return (
@@ -55,7 +56,7 @@ export default async function ProfilePage() {
       <SettingsSection title={t('profile.sectionPreferences')}>
         <SettingsRow icon="shapes" label={t('profile.categories')} value={t('profile.categoriesManage.totalCount', { count: categoryCount })} href="/profile/categories" />
         <SettingsRow icon="wallet" label={t('profile.wallets')} value={t('profile.walletsManage.totalCount', { count: walletCount })} href="/profile/wallets" />
-        <SettingsRow icon="repeat" label={t('profile.recurringExpenses')} soon />
+        <SettingsRow icon="repeat" label={t('profile.recurringExpenses')} value={t('profile.recurringManage.totalCount', { count: recurringCount })} href="/profile/recurring" />
         <SettingsRow icon="bell" label={t('profile.notifications')} soon />
         <AppearanceRow />
       </SettingsSection>
