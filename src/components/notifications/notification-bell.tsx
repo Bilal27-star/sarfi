@@ -60,7 +60,7 @@ export function NotificationBell({ initialUnread }: { initialUnread: number }) {
         type="button"
         onClick={handleOpen}
         aria-label={t('notifications.centerAria')}
-        className="btn-tactile relative flex size-9 items-center justify-center rounded-full text-text-secondary hover:bg-surface-sunken hover:text-text-primary"
+        className="relative flex size-9 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-sunken hover:text-text-primary"
       >
         <Bell className="size-5" aria-hidden />
         {unread > 0 && (
