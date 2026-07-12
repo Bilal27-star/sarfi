@@ -50,6 +50,12 @@ enum GoalStatus {
   ARCHIVED
 }
 
+enum NotificationType {
+  RECURRING_REMINDER
+  BUDGET_ALERT
+  MONTHLY_SUMMARY
+}
+
 model User {
   id                String   @id @default(cuid())
   name              String
@@ -76,6 +82,7 @@ model User {
   recurringExpenses RecurringExpense[]
   achievements      UserAchievement[]
   dailyTracking     DailyTracking[]
+  notifications     Notification[]
 }
 
 model Session {
@@ -265,4 +272,26 @@ model DailyTracking {
   expenseCount      Int      @default(0)
 
   @@id([userId, date])
+}
+
+// Content is never stored as English text — only `type` + `params` — so a
+// notification renders in whatever locale the user is in *at read time*,
+// even if it changes their language after the notification was generated.
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  params    Json             @default("{}")
+  link      String?
+  // e.g. "recurring:<recurringExpenseId>:<occurrenceISO>" — the unique index
+  // below makes re-running the daily generator idempotent (createMany +
+  // skipDuplicates), the same guarantee recurring-materialize.ts gets from
+  // its compare-and-swap, without needing a transaction.
+  dedupeKey String
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, createdAt])
 }

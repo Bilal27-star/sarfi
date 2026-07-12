@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Home, ReceiptText, ChartPie, UserRound, Plus } from 'lucide-react'
 import { LogoMark, LogoWord } from '@/components/layout/logo'
 import { AddExpenseSheet, type AddExpenseData } from '@/components/expenses/add-expense-sheet'
+import { NotificationBell } from '@/components/notifications/notification-bell'
 import { useT } from '@/i18n/provider'
 import { cn } from '@/lib/utils'
 
@@ -23,9 +24,10 @@ const NAV_ITEMS = [
 type Props = {
   children: ReactNode
   addExpenseData: AddExpenseData
+  unreadNotifications: number
 }
 
-export function AppShell({ children, addExpenseData }: Props) {
+export function AppShell({ children, addExpenseData, unreadNotifications }: Props) {
   const pathname = usePathname()
   const t = useT()
   const [addOpen, setAddOpen] = useState(false)
@@ -36,10 +38,13 @@ export function AppShell({ children, addExpenseData }: Props) {
       <div className="min-h-dvh md:flex">
         {/* Desktop / tablet side navigation */}
         <aside className="hidden md:flex md:w-60 lg:w-64 shrink-0 flex-col gap-1 border-e border-border-subtle bg-surface px-4 py-6 sticky top-0 h-dvh">
-          <Link href="/home" className="mb-6 flex items-center gap-3 px-2">
-            <LogoMark />
-            <LogoWord className="text-xl" />
-          </Link>
+          <div className="mb-6 flex items-center justify-between gap-2 px-2">
+            <Link href="/home" className="flex min-w-0 items-center gap-3">
+              <LogoMark />
+              <LogoWord className="text-xl" />
+            </Link>
+            <NotificationBell initialUnread={unreadNotifications} />
+          </div>
           {NAV_ITEMS.map(({ href, navKey, icon: Icon }) => {
             const active = pathname.startsWith(href)
             return (

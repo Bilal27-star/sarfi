@@ -82,3 +82,8 @@ export type UserAchievement = Prisma.UserAchievementModel
  * 
  */
 export type DailyTracking = Prisma.DailyTrackingModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

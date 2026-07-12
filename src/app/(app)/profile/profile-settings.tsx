@@ -104,11 +104,16 @@ export function SettingsRow({
 export function SettingsToggleRow({
   icon,
   label,
+  helper,
   checked,
   onChange,
 }: {
   icon: string
   label: string
+  /** Optional one-line context under the label — the sound/haptics rows
+   * don't need it (self-explanatory), preference toggles like notifications
+   * usually do. */
+  helper?: string
   checked: boolean
   onChange: (next: boolean) => void
 }) {
@@ -116,7 +121,10 @@ export function SettingsToggleRow({
   return (
     <div className="flex min-h-13 items-center gap-3 py-3">
       <Icon className="size-4.5 shrink-0 text-text-muted" aria-hidden />
-      <span className="flex-1 text-start text-title-card">{label}</span>
+      <span className="flex-1 text-start">
+        <span className="block text-title-card">{label}</span>
+        {helper && <span className="block text-caption text-text-muted">{helper}</span>}
+      </span>
       <Switch checked={checked} onChange={onChange} label={label} />
     </div>
   )

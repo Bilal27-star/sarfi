@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getCurrentUser } from '@/server/auth/session'
 import { getSystemAndUserCategories, getWallets } from '@/server/services/expenses'
+import { getUnreadCount } from '@/server/services/notifications'
 import { AppShell } from '@/components/layout/app-shell'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -8,13 +9,15 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!user) redirect('/signin')
   if (!user.preferences?.setupCompleted) redirect('/setup')
 
-  const [categories, wallets] = await Promise.all([
+  const [categories, wallets, unreadNotifications] = await Promise.all([
     getSystemAndUserCategories(user.id),
     getWallets(user.id),
+    getUnreadCount(user.id),
   ])
 
   return (
     <AppShell
+      unreadNotifications={unreadNotifications}
       addExpenseData={{
         categories: categories.map((c) => ({
           id: c.id,

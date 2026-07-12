@@ -63,3 +63,12 @@ export const GoalStatus = {
 } as const
 
 export type GoalStatus = (typeof GoalStatus)[keyof typeof GoalStatus]
+
+
+export const NotificationType = {
+  RECURRING_REMINDER: 'RECURRING_REMINDER',
+  BUDGET_ALERT: 'BUDGET_ALERT',
+  MONTHLY_SUMMARY: 'MONTHLY_SUMMARY'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

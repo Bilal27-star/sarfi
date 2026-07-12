@@ -267,6 +267,26 @@ export const fr: typeof en = {
       },
     },
   },
+  notifications: {
+    title: 'Notifications',
+    centerAria: 'Notifications',
+    empty: 'Vous êtes à jour — aucune notification pour l’instant.',
+    markAllRead: 'Tout marquer comme lu',
+    types: {
+      RECURRING_REMINDER: {
+        title: 'Dépense récurrente à venir',
+        body: '{{description}} · {{amount}} arrive bientôt à échéance.',
+      },
+      BUDGET_ALERT: {
+        title: 'Alerte budget',
+        body: 'Vous approchez de votre limite de budget.',
+      },
+      MONTHLY_SUMMARY: {
+        title: 'Résumé mensuel',
+        body: 'Votre résumé de dépenses du mois est prêt.',
+      },
+    },
+  },
   profile: {
     title: 'Profil',
     statsExpenses: { one: '{{count}} dépense', other: '{{count}} dépenses' },
@@ -386,6 +406,15 @@ export const fr: typeof en = {
       empty: 'Aucune dépense récurrente pour l’instant — ajoutez-en une pour une facture ou un abonnement qui se répète.',
       deleteRecurring: 'Supprimer la dépense récurrente',
       errorForbidden: 'Vous ne pouvez modifier ou supprimer que vos propres dépenses récurrentes.',
+    },
+    notificationsManage: {
+      dailyReminder: 'Rappels de dépenses récurrentes',
+      dailyReminderHelper: 'Soyez averti quand une dépense récurrente approche de son échéance.',
+      budgetAlerts: 'Alertes budget',
+      budgetAlertsHelper: 'Soyez averti quand vous approchez de votre budget mensuel.',
+      weeklySummary: 'Résumé hebdomadaire',
+      weeklySummaryHelper: 'Recevez un récapitulatif de vos dépenses chaque semaine.',
+      errorForbidden: 'Vous ne pouvez gérer que vos propres notifications.',
     },
   },
   validation: {

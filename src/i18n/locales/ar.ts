@@ -274,6 +274,26 @@ export const ar: typeof en = {
       },
     },
   },
+  notifications: {
+    title: 'الإشعارات',
+    centerAria: 'الإشعارات',
+    empty: 'لا توجد إشعارات جديدة — أنت على اطلاع بكل شيء.',
+    markAllRead: 'تعليم الكل كمقروء',
+    types: {
+      RECURRING_REMINDER: {
+        title: 'مصروف متكرر قادم',
+        body: '{{description}} · يستحق {{amount}} قريباً.',
+      },
+      BUDGET_ALERT: {
+        title: 'تنبيه الميزانية',
+        body: 'أنت تقترب من حد ميزانيتك.',
+      },
+      MONTHLY_SUMMARY: {
+        title: 'الملخص الشهري',
+        body: 'ملخص مصاريفك لهذا الشهر جاهز.',
+      },
+    },
+  },
   profile: {
     title: 'الملف الشخصي',
     statsExpenses: { zero: 'لا مصاريف', one: 'مصروف واحد', two: 'مصروفان', few: '{{count}} مصاريف', many: '{{count}} مصروفاً', other: '{{count}} مصروف' },
@@ -401,6 +421,15 @@ export const ar: typeof en = {
       empty: 'لا توجد مصاريف متكررة بعد — أضف واحداً لفاتورة أو اشتراك يتكرر.',
       deleteRecurring: 'حذف المصروف المتكرر',
       errorForbidden: 'يمكنك فقط تعديل أو حذف مصاريفك المتكررة الخاصة.',
+    },
+    notificationsManage: {
+      dailyReminder: 'تذكيرات المصاريف المتكررة',
+      dailyReminderHelper: 'احصل على تنبيه عند اقتراب موعد مصروف متكرر.',
+      budgetAlerts: 'تنبيهات الميزانية',
+      budgetAlertsHelper: 'احصل على تنبيه عند اقترابك من ميزانيتك الشهرية.',
+      weeklySummary: 'الملخص الأسبوعي',
+      weeklySummaryHelper: 'احصل على ملخص لمصاريفك كل أسبوع.',
+      errorForbidden: 'يمكنك فقط إدارة إشعاراتك الخاصة.',
     },
   },
   validation: {

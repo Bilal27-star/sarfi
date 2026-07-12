@@ -57,7 +57,7 @@ export default async function ProfilePage() {
         <SettingsRow icon="shapes" label={t('profile.categories')} value={t('profile.categoriesManage.totalCount', { count: categoryCount })} href="/profile/categories" />
         <SettingsRow icon="wallet" label={t('profile.wallets')} value={t('profile.walletsManage.totalCount', { count: walletCount })} href="/profile/wallets" />
         <SettingsRow icon="repeat" label={t('profile.recurringExpenses')} value={t('profile.recurringManage.totalCount', { count: recurringCount })} href="/profile/recurring" />
-        <SettingsRow icon="bell" label={t('profile.notifications')} soon />
+        <SettingsRow icon="bell" label={t('profile.notifications')} href="/profile/notifications" />
         <AppearanceRow />
       </SettingsSection>
 

@@ -269,6 +269,26 @@ export const en = {
       },
     },
   },
+  notifications: {
+    title: 'Notifications',
+    centerAria: 'Notifications',
+    empty: 'You’re all caught up — no notifications yet.',
+    markAllRead: 'Mark all as read',
+    types: {
+      RECURRING_REMINDER: {
+        title: 'Upcoming recurring expense',
+        body: '{{description}} · {{amount}} is due soon.',
+      },
+      BUDGET_ALERT: {
+        title: 'Budget alert',
+        body: 'You’re approaching your budget limit.',
+      },
+      MONTHLY_SUMMARY: {
+        title: 'Monthly summary',
+        body: 'Your spending summary for this month is ready.',
+      },
+    },
+  },
   profile: {
     title: 'Profile',
     statsExpenses: { one: '{{count}} expense', other: '{{count}} expenses' } as Plural,
@@ -388,6 +408,15 @@ export const en = {
       empty: 'No recurring expenses yet — add one for a bill or subscription that repeats.',
       deleteRecurring: 'Delete recurring expense',
       errorForbidden: 'You can only edit or delete your own recurring expenses.',
+    },
+    notificationsManage: {
+      dailyReminder: 'Recurring expense reminders',
+      dailyReminderHelper: 'Get notified when a recurring expense is coming due.',
+      budgetAlerts: 'Budget alerts',
+      budgetAlertsHelper: 'Get notified when you’re approaching your monthly budget.',
+      weeklySummary: 'Weekly summary',
+      weeklySummaryHelper: 'Get a recap of your spending each week.',
+      errorForbidden: 'You can only manage your own notifications.',
     },
   },
   validation: {

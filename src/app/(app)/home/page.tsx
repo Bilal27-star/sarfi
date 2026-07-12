@@ -9,6 +9,7 @@ import {
   sumExpenses,
 } from '@/server/services/expenses'
 import { generateSpendingInsights } from '@/server/services/insights'
+import { getUnreadCount } from '@/server/services/notifications'
 import { db } from '@/server/db'
 import {
   endOfDay,
@@ -28,6 +29,7 @@ import { ExpenseRow } from '@/components/expenses/expense-row'
 import { InsightCard } from '@/components/insights/insight-card'
 import { CategoryBars } from '@/components/insights/charts'
 import { EmptyState } from '@/components/ui/empty-state'
+import { NotificationBell } from '@/components/notifications/notification-bell'
 import { getServerTranslator } from '@/i18n/locale-server'
 import { categoryLabel } from '@/i18n/category-label'
 import { localizeInsight } from '@/i18n/localize-insight'
@@ -45,7 +47,7 @@ export default async function HomePage() {
   const weekRange = periodRange('7d', now)
   const prevWeekRange = previousRange(weekRange)
 
-  const [spentToday, monthSpent, budget, recent, weekCategories, prevWeekCategories, weekExpenses, prevWeekExpenses] =
+  const [spentToday, monthSpent, budget, recent, weekCategories, prevWeekCategories, weekExpenses, prevWeekExpenses, unreadNotifications] =
     await Promise.all([
       sumExpenses(user.id, today),
       sumExpenses(user.id, monthRange),
@@ -61,6 +63,7 @@ export default async function HomePage() {
         where: { userId: user.id, expenseDate: { gte: prevWeekRange.start, lte: prevWeekRange.end } },
         select: { amount: true, expenseDate: true, merchant: true, category: { select: { slug: true, name: true } } },
       }),
+      getUnreadCount(user.id),
     ])
 
   const daysInMonth = Math.round((monthRange.end.getTime() - monthRange.start.getTime()) / 86_400_000)
@@ -114,9 +117,14 @@ export default async function HomePage() {
             </h1>
             <p className="text-meta">{fullDateLabel(now, locale)}</p>
           </div>
-          <Link href="/profile" aria-label={t('navigation.profile')} className="shrink-0 rounded-full">
-            <Avatar name={user.name} avatarUrl={user.avatarUrl} />
-          </Link>
+          <div className="flex shrink-0 items-center gap-1">
+            <div className="md:hidden">
+              <NotificationBell initialUnread={unreadNotifications} />
+            </div>
+            <Link href="/profile" aria-label={t('navigation.profile')} className="shrink-0 rounded-full">
+              <Avatar name={user.name} avatarUrl={user.avatarUrl} />
+            </Link>
+          </div>
         </header>
 
         <div className="mt-5 flex items-center gap-4">
